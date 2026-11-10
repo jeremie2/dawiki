@@ -1,0 +1,13 @@
+DROP TABLE IF EXISTS pagine_wiki;
+
+DROP INDEX IF EXISTS idx_pagine_slug;
+
+CREATE TABLE pages (
+    id INTEGER PRIMARY KEY,
+    path TEXT NOT NULL UNIQUE,
+    title TEXT NOT NULL,
+    markdown TEXT NOT NULL,
+    html TEXT NOT NULL,
+    created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
