@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% block main_class %}site-main-editor{% endblock main_class %}
+
+{% block title %}{{ heading }} - DaWiki{% endblock title %}
+
+{% block head %}
+    <link rel="stylesheet" href="/static/css/editor.css">
+
+    <script src="/static/js/marked.umd.js"></script>
+    <script src="/static/js/purify.min.js"></script>
+    <script src="/static/js/prism.js"></script>
+    <script src="/static/js/custom_tags.js"></script>
+    <script src="/static/js/editor_n_buttons.js" defer></script>
+{% endblock head %}
+
+{% block content %}
+<h1>{{ heading }}</h1>
+
+<form
+    id="page-editor-form"
+    data-mode="{{ mode }}"
+    data-page-path="{{ path }}"
+>
+    {% if mode == "create" %}
+    <label for="page-path">Percorso della pagina</label>
+    <input
+        type="text"
+        id="page-path"
+        name="path"
+        placeholder="Hardware/Video/Amd"
+        maxlength="512"
+        required
+        autocomplete="off"
+    >
+    {% endif %}
+
+<div class="editor-actions">
+    <button type="button" id="btn-save">💾 Salva pagina</button>
+</div>
+
+<div class="view-toggle-bar">
+    <button type="button" id="btn-view-split" class="active">💻 Split view</button>
+    <button type="button" id="btn-view-input">✍️ Solo editor</button>
+    <button type="button" id="btn-view-preview">👁️ Solo anteprima</button>
+</div>
+
+<div class="push push-document">
+    <button type="button" id="btn-h1" title="Paragrafo">Par 1</button>
+    <button type="button" id="btn-h2" title="Sottoparagrafo">Par 2</button>
+    <button type="button" id="btn-h3" title="Sottosottoparagrafo">Par 3</button>
+    <button type="button" id="btn-note" title="Nota">📝</button>
+    <button type="button" id="btn-tip" title="Suggerimento">💡</button>
+    <button type="button" id="btn-warning" title="Avviso">⚠️</button>
+    <button type="button" id="btn-menu-1" title="Indice fino al primo livello">Ind 1</button>
+    <button type="button" id="btn-menu-2" title="Indice fino al secondo livello">Ind 2</button>
+    <button type="button" id="btn-menu-3" title="Indice fino al terzo livello">Ind 3</button>
+    <button type="button" id="btn-ubu-version" title="Versioni di Ubuntu">Ubu versioni</button>
+    <button type="button" id="btn-link-forum" title="Link al forum">Forum</button>
+</div>
+
+<div class="push push-text">
+    <button type="button" id="btn-bold" title="Grassetto"><b>B</b></button>
+    <button type="button" id="btn-italic" title="Corsivo"><b><i>i</i></b></button>
+    <button type="button" id="btn-tt" title="Larghezza fissa"><tt>tt</tt></button>
+    <button type="button" id="btn-codeblock" title="Blocco codice"><b>&lt;</b><b>&gt;</b></button>
+    <button type="button" id="btn-link" title="Link">🔗</button>
+    <button type="button" id="btn-br" title="A capo"><b>br</b></button>
+    <button type="button" id="btn-bullet" title="Elenco puntato">:=</button>
+    <button type="button" id="btn-num" title="Elenco numerato">:1</button>
+    <button type="button" id="btn-comment" title="Commento">&lt;--</button>
+    <button type="button" id="btn-quote" title="Citazione"><b>"</b> <b>"</b></button>
+    <button type="button" id="btn-anchor" title="Ancora">⚓</button>
+    <button type="button" id="btn-table" title="Tabella">🪟</button>
+    <button type="button" id="btn-img" title="Immagine">🖼️</button>
+</div>
+
+<div id="editor-wrapper" class="editor-container split-view">
+    <textarea
+        id="markdown-input"
+        name="markdown"
+        placeholder="Scrivi qui in Markdown..."
+    >{{ markdown }}</textarea>
+
+    <div class="preview-column-wrapper">
+        <div id="sidebar-toc"></div>
+        <div id="preview"></div>
+    </div>
+</div>
+
+</form>
+{% endblock content %}

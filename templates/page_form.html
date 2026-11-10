@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}{{ heading }} - DaWiki{% endblock %}
+
+{% block content %}
+    <h1>{{ heading }}</h1>
+
+    <form action="{{ action }}" method="post">
+        {% if not is_edit %}
+            <label for="path">Percorso della pagina</label>
+            <input
+                type="text"
+                id="path"
+                name="path"
+                value="{{ path }}"
+                placeholder="Hardware/Video/Amd"
+                maxlength="512"
+                required
+                autocomplete="off"
+            >
+        {% else %}
+            <p><strong>Percorso:</strong> /{{ path }}</p>
+        {% endif %}
+
+        <label for="markdown">Contenuto in Markdown</label>
+        <textarea
+            id="markdown"
+            name="markdown"
+            required
+        >{{ markdown }}</textarea>
+
+        {% if is_edit %}
+            <button type="submit">Salva modifiche</button>
+        {% else %}
+            <button type="submit">Crea pagina</button>
+        {% endif %}
+    </form>
+{% endblock %}

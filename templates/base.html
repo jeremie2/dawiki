@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}DaWiki{% endblock title %}</title>
+
+    <link rel="stylesheet" href="/static/css/wiki.css">
+    <link rel="stylesheet" href="/static/css/custom-tags.css">
+    <link rel="stylesheet" href="/static/css/prism.css">
+
+    {% block head %}{% endblock head %}
+</head>
+<body>
+    <header class="site-header">
+        <a href="/" class="site-title">Wiki di ubuntu-it</a>
+    </header>
+
+    <main class="site-main {% block main_class %}{% endblock main_class %}">
+        {% block content %}{% endblock content %}
+    </main>
+</body>
+</html>

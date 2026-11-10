@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}{{ title }} - DaWiki{% endblock %}
+
+{% block content %}
+    <nav class="breadcrumb">
+        <a href="/">Home</a>
+
+        {% for item in breadcrumb %}
+            /
+            <a href="{{ item.href }}">{{ item.label }}</a>
+        {% endfor %}
+    </nav>
+
+    <div class="page-actions">
+        <a class="button" href="{{ edit_url }}">Modifica</a>
+    </div>
+
+    <article class="wiki-content">
+        {{ content_html | safe }}
+    </article>
+
+    <script src="/static/js/prism.js"></script>
+{% endblock %}
