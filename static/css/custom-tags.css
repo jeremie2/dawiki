@@ -1,0 +1,171 @@
+/* ################################### */
+/* ############### TOC ############### */
+/* ################################### */
+
+.toc-container[open] ol {
+    animation: fadeIn 0.2s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.toc-container {
+    width: max-content;
+    min-width: 400px;
+    max-width: 400px;
+    padding: 20px;
+    margin-bottom: 12px;
+    background-color: #1d1e29;
+    border-radius: 10px;
+    box-shadow: 0 1px 8px #000;
+    font-size: 16px;
+}
+
+.toc-container a {
+    font-size: 16px;
+    text-decoration-thickness: 1px;
+}
+
+.toc-container strong {
+    font-size: 25px;
+}
+
+.toc-container li {
+    margin-bottom: 5px;
+}
+
+/* ################################### */
+/* ########## SIDEBAR TOC ############ */
+/* ################################### */
+
+#sidebar-toc {
+    display: none;
+    width: 320px;
+    min-width: 0;
+    padding: 20px;
+    margin-bottom: 12px;
+    background-color: #1d1e29;
+    border-radius: 10px;
+    box-shadow: 0 1px 8px #000;
+    font-size: 16px;
+}
+
+#sidebar-toc.has-toc {
+    display: block;
+}
+
+#sidebar-toc .desktop-only-toc {
+    width: 100%;
+    margin: 0;
+    padding: 0 10px 0 0;
+    background-color: transparent;
+    box-shadow: none;
+    border-radius: 0;
+}
+
+#sidebar-toc ol {
+    margin-top: 0;
+}
+
+#sidebar-toc a {
+    font-size: 16px;
+    text-decoration-thickness: 1px;
+}
+
+.mobile-only-toc {
+    display: block;
+}
+
+/* ################################### */
+/* ########## UBUNTU VERSION ######### */
+/* ################################### */
+
+.ubuntu-alert {
+    color: #e1e1e1;
+    padding: 12px 16px;
+    border-radius: 4px;
+    font-size: 0.95em;
+    line-height: 1.5;
+}
+
+.alert-active,
+.link-forum-box {
+    max-width: 400px;
+    padding: 4px;
+    background-color: #1d1e29;
+    font-size: 16px;
+    text-align: center;
+}
+
+.alert-pro {
+    background-color: #954718;
+}
+
+.alert-obsolete {
+    background-color: #561a1a;
+}
+
+.alert-error {
+    background-color: #561a1a;
+}
+
+.alert-error,
+.alert-pro,
+.alert-obsolete {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    box-shadow: 0 1px 8px #1f1f1f;
+}
+
+/* ################################### */
+/* ############ LIGHT MODE ########### */
+/* ################################### */
+
+@media screen and (prefers-color-scheme: light) {
+    .toc-container,
+    #sidebar-toc {
+        background-color: #fcfcfc;
+        box-shadow: 0 1px 8px #cdcdcd;
+    }
+
+    .toc-container a {
+        color: #2e2e2e;
+    }
+
+    .alert-active,
+    .link-forum-box {
+        background-color: #fcfcfc;
+        color: #333;
+    }
+
+    .alert-pro {
+        color: #fff;
+        background-color: #e97631;
+        box-shadow: 0 1px 8px #cdcdcd;
+    }
+
+    .alert-obsolete {
+        background-color: #9b0909;
+        box-shadow: 0 1px 8px #cdcdcd;
+    }
+
+    .alert-obsolete a,
+    .alert-pro a {
+        color: #fff;
+    }
+
+    .alert-error {
+        background-color: #9b0909;
+        box-shadow: 0 1px 8px #cdcdcd;
+    }
+}

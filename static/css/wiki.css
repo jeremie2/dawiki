@@ -1,0 +1,485 @@
+/* ################################### */
+/* ######### RESET + GENERAL ######### */
+/* ################################### */
+
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    margin: 20px;
+    font-family: sans-serif;
+    font-size: 18px;
+    background-color: #232323;
+    color: #e1e1e1;
+}
+
+h1,
+h2,
+h3 {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+p {
+    line-height: 1.5;
+}
+
+a {
+    color: #fff;
+    text-decoration: underline;
+    text-decoration-color: #ff9c61;
+    text-decoration-thickness: 2px;
+}
+
+button {
+    background-color: #35353d;
+    padding: 8px;
+    border: 2px solid #d05d19;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    color: #e1e1e1;
+    font-size: 20px;
+    min-width: 45px;
+}
+
+/* ################################### */
+/* ########### WIKI CONTENT ########## */
+/* ################################### */
+
+.wiki-content {
+    max-width: 100%;
+}
+
+.wiki-content h1,
+.wiki-content h2,
+.wiki-content h3 {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.wiki-content p {
+    line-height: 1.5;
+}
+
+.wiki-content a {
+    color: #fff;
+    text-decoration: underline;
+    text-decoration-color: #ff9c61;
+    text-decoration-thickness: 2px;
+}
+
+.wiki-content pre,
+.wiki-content code {
+    background-color: #1d1e29;
+}
+
+.wiki-content pre {
+    overflow: scroll;
+    margin: 0.5em 0;
+    padding: 0.7em;
+    border-radius: 10px;
+}
+
+.wiki-content code {
+    color: #f2b089;
+    font-family: monospace;
+    font-size: 18px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    padding-left: 4px;
+    padding-right: 4px;
+    border: 1px solid #984514;
+    border-radius: 4px;
+}
+
+.wiki-content pre code {
+    color: #ccc;
+    border: none;
+    padding: 0;
+}
+
+.wiki-content td code {
+    border: none;
+    background-color: #363541;
+}
+
+.wiki-content ul,
+.wiki-content ol {
+    margin-top: 10px;
+    margin-bottom: 15px;
+    padding-left: 2rem;
+}
+
+.wiki-content li {
+    margin-bottom: 10px;
+}
+
+.wiki-content table {
+    background-color: #1d1e29;
+    border: 2px solid #1d1e29;
+    box-shadow: 0 1px 4px #000;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    border-collapse: collapse;
+}
+
+.wiki-content td,
+.wiki-content th {
+    border: 1pt solid #6c6c6c;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
+.wiki-content blockquote {
+    background-color: #4a5561;
+    border-radius: 10px;
+}
+
+.wiki-content blockquote p {
+    color: #d6d6d6;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+/* ################################### */
+/* ####### WIKI CONTENT DETAIL ####### */
+/* ################################### */
+
+/* Links, including TOC links */
+.wiki-content a,
+#preview a {
+    color: #ffffff;
+    text-decoration: underline;
+    text-decoration-color: #ff9c61;
+    text-decoration-thickness: 2px;
+}
+
+.wiki-content a:hover,
+#preview a:hover {
+    color: #ff9c61;
+}
+
+/* Inline code: `testo` */
+.wiki-content code,
+#preview code {
+    display: inline-block;
+    padding: 2px 4px;
+    background-color: #1d1e29;
+    border: 1px solid #984514;
+    border-radius: 4px;
+    color: #f2b089;
+    font-family: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
+    font-size: 18px;
+    line-height: 1.4;
+}
+
+/* Code blocks without Prism highlighting */
+.wiki-content pre:not([class*="language-"]),
+#preview pre:not([class*="language-"]) {
+    margin: 16px 0;
+    padding: 0.7em;
+    background-color: #1d1e29;
+    border-radius: 10px;
+    overflow: auto;
+}
+
+.wiki-content pre:not([class*="language-"]) code,
+#preview pre:not([class*="language-"]) code {
+    display: block;
+    padding: 0;
+    background-color: transparent;
+    border: none;
+    border-radius: 0;
+    color: #cccccc;
+    font-size: 18px;
+    white-space: pre;
+}
+
+/* Tables */
+.wiki-content table,
+#preview table {
+    width: auto;
+    max-width: 100%;
+    margin: 16px 0;
+    background-color: #1d1e29;
+    border: 2px solid #1d1e29;
+    border-collapse: collapse;
+    box-shadow: 0 1px 4px #000;
+}
+
+.wiki-content th,
+.wiki-content td,
+#preview th,
+#preview td {
+    padding: 6px 10px;
+    border: 1px solid #6c6c6c;
+    background-color: #1d1e29;
+    text-align: left;
+    vertical-align: top;
+}
+
+.wiki-content th,
+#preview th {
+    font-weight: bold;
+}
+
+.wiki-content td code,
+#preview td code {
+    background-color: #363541;
+    border: none;
+}
+
+/* Quotes: notes, tips, warnings and normal Markdown quotes */
+.wiki-content blockquote,
+#preview blockquote {
+    margin: 16px 0;
+    padding: 12px 20px;
+    background-color: #4a5561;
+    border-radius: 10px;
+    color: #d6d6d6;
+}
+
+.wiki-content blockquote p,
+#preview blockquote p {
+    margin: 8px 0;
+    color: #d6d6d6;
+}
+
+.wiki-content blockquote strong,
+#preview blockquote strong {
+    color: #ffffff;
+}
+
+/* Lists: restore indentation inside wiki content and preview */
+.wiki-content ul,
+.wiki-content ol,
+#preview ul,
+#preview ol {
+    margin-top: 10px;
+    margin-bottom: 15px;
+    padding-left: 2rem;
+}
+
+.wiki-content li,
+#preview li {
+    margin-bottom: 10px;
+}
+
+/* Preserve indentation for nested TOC levels */
+.toc-container ol,
+#sidebar-toc ol {
+    margin: 0;
+    padding-left: 1.25rem;
+}
+
+.toc-container ol ol,
+#sidebar-toc ol ol {
+    padding-left: 1.25rem;
+}
+
+.toc-container li,
+#sidebar-toc li {
+    margin-bottom: 5px;
+}
+
+/* Prism code blocks: rounded container and clean inner code */
+.wiki-content pre[class*="language-"],
+#preview pre[class*="language-"] {
+    margin: 16px 0;
+    padding: 0.7em;
+    background-color: #1d1e29;
+    border-radius: 10px;
+    overflow: auto;
+}
+
+.wiki-content pre[class*="language-"] code,
+#preview pre[class*="language-"] code {
+    background-color: transparent;
+    border: none;
+    border-radius: 0;
+    padding: 0;
+    color: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    white-space: pre;
+}
+
+/* ################################### */
+/* ############ LIGHT MODE ########### */
+/* ################################### */
+
+@media screen and (prefers-color-scheme: light) {
+    body {
+        background-color: #d2d2d2;
+        color: #333;
+    }
+
+    pre {
+        background-color: #fcfcfc;
+        border: 1px solid #fcfcfc;
+        box-shadow: 0 2px 5px #cdcdcd;
+    }
+
+    code {
+        color: #cb650a;
+        background-color: #fcfcfc;
+        border: 1px solid #e1b499;
+    }
+
+    pre code {
+        color: #333;
+    }
+
+    td code {
+        border: none;
+        background-color: #f1e8e3;
+    }
+
+    #preview,
+    #markdown-input {
+        background-color: #f0f0f0;
+        color: #333;
+    }
+
+    a:link,
+    a:visited,
+    a:hover,
+    a:active {
+        color: #000;
+    }
+
+    table {
+        background-color: #fcfcfc;
+        border: 2px solid #fcfcfc;
+        box-shadow: 0 1px 4px #959595;
+    }
+
+    td,
+    th {
+        border: 1pt solid #d4d4d4;
+        padding: 5px;
+    }
+
+    button {
+        background-color: #f6f5f5;
+        color: #333;
+    }
+
+    blockquote {
+        background-color: #dfecfb;
+        color: #333;
+        box-shadow: 0 2px 5px #cdcdcd;
+    }
+
+    blockquote p {
+        color: #333;
+    }
+
+    .wiki-content a,
+    #preview a {
+        color: #000000;
+        text-decoration-color: #cb650a;
+    }
+
+    .wiki-content a:hover,
+    #preview a:hover {
+        color: #cb650a;
+    }
+
+    .wiki-content code,
+    #preview code {
+        background-color: #fcfcfc;
+        border-color: #e1b499;
+        color: #cb650a;
+    }
+
+    .wiki-content pre:not([class*="language-"]),
+    #preview pre:not([class*="language-"]) {
+        background-color: #fcfcfc;
+        border: 1px solid #fcfcfc;
+        box-shadow: 0 2px 5px #cdcdcd;
+    }
+
+    .wiki-content pre:not([class*="language-"]) code,
+    #preview pre:not([class*="language-"]) code {
+        color: #333333;
+    }
+
+    .wiki-content table,
+    #preview table {
+        background-color: #fcfcfc;
+        border-color: #fcfcfc;
+        box-shadow: 0 1px 4px #959595;
+    }
+
+    .wiki-content th,
+    .wiki-content td,
+    #preview th,
+    #preview td {
+        border-color: #d4d4d4;
+    }
+
+    .wiki-content th,
+    #preview th {
+        background-color: #f1f1f1;
+    }
+
+    .wiki-content td code,
+    #preview td code {
+        background-color: #f1e8e3;
+    }
+
+    .wiki-content blockquote,
+    #preview blockquote {
+        background-color: #dfecfb;
+        color: #333333;
+        box-shadow: 0 2px 5px #cdcdcd;
+    }
+
+    .wiki-content blockquote p,
+    #preview blockquote p {
+        color: #333333;
+    }
+
+    .wiki-content blockquote strong,
+    #preview blockquote strong {
+        color: #333333;
+    }
+
+    .wiki-content pre[class*="language-"],
+    #preview pre[class*="language-"] {
+        background-color: #fcfcfc;
+        border-radius: 10px;
+    }
+
+    .wiki-content pre[class*="language-"] code,
+    #preview pre[class*="language-"] code {
+        background-color: transparent;
+        border: none;
+        color: inherit;
+    }
+
+    .wiki-content th,
+    .wiki-content td,
+    #preview th,
+    #preview td {
+        background-color: #fcfcfc;
+        border-color: #d4d4d4;
+    }
+
+    .wiki-content th,
+    #preview th {
+        font-weight: bold;
+    }
+}

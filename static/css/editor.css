@@ -1,0 +1,211 @@
+/* ################################### */
+/* ############## EDITOR ############# */
+/* ################################### */
+
+.editor-container {
+    display: flex;
+    gap: 15px;
+    height: 800px;
+}
+
+#markdown-input,
+#preview {
+    flex: 1;
+    padding: 20px 20px 10px;
+    background-color: #303038;
+    border: 2px solid #d05d19;
+    border-radius: 10px;
+    box-sizing: border-box;
+    height: 100%;
+    overflow-y: auto;
+}
+
+#markdown-input {
+    color: #e1e1e1;
+    resize: none;
+    font-family: monospace;
+    font-size: 20px;
+}
+
+#preview {
+    position: relative;
+}
+
+/* ################################### */
+/* ############## VIEWS ############## */
+/* ################################### */
+
+.editor-container.split-view {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: minmax(0, 1fr);
+}
+
+.editor-container.split-view #markdown-input,
+.editor-container.split-view .preview-column-wrapper {
+    min-width: 0;
+    min-height: 0;
+}
+
+.editor-container.split-view #preview {
+    width: 100%;
+    min-width: 0;
+    min-height: 0;
+    overflow-y: auto;
+}
+
+.editor-container.only-input .preview-column-wrapper {
+    display: none !important;
+}
+
+.editor-container.only-input #markdown-input {
+    display: block;
+    flex: 1 !important;
+    width: 100% !important;
+}
+
+.editor-container.only-preview #markdown-input {
+    display: none !important;
+}
+
+.editor-container.only-preview {
+    height: auto;
+    min-height: 800px;
+    align-items: flex-start;
+}
+
+.editor-container.only-preview .preview-column-wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 15px;
+    height: auto;
+    flex: 1 !important;
+    width: 100% !important;
+}
+
+.editor-container.only-preview #preview {
+    display: block;
+    flex: 1;
+    min-width: 0;
+    height: auto;
+    overflow: visible;
+}
+
+/* ################################### */
+/* ########## EDITOR LAYOUT ########## */
+/* ################################### */
+
+.site-main.site-main-editor {
+    width: 100%;
+    max-width: none;
+    margin: 24px auto;
+    padding: 0 20px;
+}
+
+#page-editor-form {
+    width: 100%;
+    max-width: none;
+    min-width: 0;
+}
+
+.view-toggle-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.view-toggle-bar button {
+    margin-bottom: 0;
+}
+
+.push {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.push:last-of-type {
+    margin-bottom: 16px;
+}
+
+.editor-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 16px;
+}
+
+.editor-actions button {
+    margin-bottom: 0;
+}
+
+.push button {
+    margin-bottom: 0;
+    min-width: 45px;
+}
+
+/* ################################### */
+/* ########## TOC VISIBILITY ######### */
+/* ################################### */
+
+.editor-container.split-view #sidebar-toc,
+.editor-container.only-input #sidebar-toc {
+    display: none;
+}
+
+.editor-container.split-view .toc-container.mobile-only-toc {
+    display: block;
+}
+
+/* ################################### */
+/* ############ RESPONSIVE ########### */
+/* ################################### */
+
+@media screen and (min-width: 1024px) {
+    .editor-container.only-preview #sidebar-toc.has-toc {
+        display: block;
+        flex: 0 0 320px;
+        position: sticky;
+        top: 0;
+        max-height: 100vh;
+        overflow-y: auto;
+        align-self: flex-start;
+    }
+
+    .editor-container.only-preview .toc-container.mobile-only-toc {
+        display: none !important;
+    }
+}
+
+@media screen and (max-width: 1023.98px) {
+    .editor-container.only-preview #sidebar-toc {
+        display: none !important;
+    }
+
+    .editor-container.only-preview .toc-container.mobile-only-toc {
+        display: block !important;
+    }
+}
+
+/* ################################### */
+/* ############ LIGHT MODE ########### */
+/* ################################### */
+
+@media screen and (prefers-color-scheme: light) {
+    #markdown-input,
+    #preview {
+        background-color: #f0f0f0;
+        color: #333;
+    }
+
+    #sidebar-toc {
+        background-color: #fcfcfc;
+        box-shadow: 0 1px 8px #cdcdcd;
+    }
+
+    .toc-container {
+        box-shadow: 0 1px 8px #cdcdcd;
+    }
+}
