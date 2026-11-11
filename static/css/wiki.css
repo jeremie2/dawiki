@@ -324,6 +324,23 @@ button {
     white-space: pre;
 }
 
+/* Error pages */
+.error-page {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 40px;
+}
+
+.error-card {
+    max-width: 720px;
+    width: 100%;
+}
+
+.error-actions {
+    margin-top: 24px;
+}
+
 /* ################################### */
 /* ############ LIGHT MODE ########### */
 /* ################################### */
@@ -495,5 +512,10 @@ button {
     .wiki-content th,
     #preview th {
         font-weight: bold;
+    }
+
+    .error-card {
+        background-color: #f0f0f0;
+        color: #333;
     }
 }

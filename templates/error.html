@@ -2,11 +2,24 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8">
-    <title>Errore - DaWiki</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }} - DaWiki</title>
+
+    <link rel="stylesheet" href="/static/css/wiki.css">
+    <link rel="stylesheet" href="/static/css/custom-tags.css">
+    <link rel="stylesheet" href="/static/css/prism.css">
 </head>
 <body>
-    <h1>Errore</h1>
-    <p>{{ message }}</p>
-    <p><a href="/">Torna alla home</a></p>
+    <main class="error-page">
+        <article class="wiki-content error-card">
+            <h1>{{ title }}</h1>
+
+            <p>{{ message }}</p>
+
+            <div class="error-actions">
+                <a class="button" href="/">Torna alla home</a>
+            </div>
+        </article>
+    </main>
 </body>
 </html>
