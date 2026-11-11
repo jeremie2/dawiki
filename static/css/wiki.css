@@ -156,6 +156,15 @@ button {
 /* ####### WIKI CONTENT DETAIL ####### */
 /* ################################### */
 
+/* Page content container */
+.wiki-content {
+    background-color: #303038;
+    border: 2px solid #d05d19;
+    border-radius: 10px;
+    padding: 20px 20px 10px;
+    box-sizing: border-box;
+}
+
 /* Links, including TOC links */
 .wiki-content a,
 #preview a {
@@ -383,6 +392,11 @@ button {
     }
 
     blockquote p {
+        color: #333;
+    }
+
+    .wiki-content {
+        background-color: #f0f0f0;
         color: #333;
     }
 
