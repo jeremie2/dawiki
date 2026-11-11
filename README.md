@@ -4,6 +4,8 @@ This project aims to explore ways to add wiki functionality to a website. It is 
 
 > ⚠️ This is a work in progress; use in a production environment is not recommended.
 
+> 📝 Sorry if the user interface is in Italian... This because if the project will reach good results it could be used in an Italian website and it's not intended to be a real *framework*. The code (function names, variables, comments, etc..) is all in English.
+
 # Prerequisites
 
 1. Install **Rust**.
@@ -26,3 +28,8 @@ cargo install sqlx-cli --no-default-features --features sqlite
    ```bash
    cargo run
    ```
+
+# Usage
+
+- To create a new page go to `http://127.0.0.1:3000/~nuova`. Write some markdown a click on **Salva pagina**.
+- To update a page click on **Modifica** or into the address bar `http://127.0.0.1:3000/~modifica/name_of_existing_page`.
