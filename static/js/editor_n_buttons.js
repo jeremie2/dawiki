@@ -27,8 +27,6 @@ function updatePreview() {
 }
 
 markdownInput.addEventListener('input', updatePreview);
-
-markdownInput.value = '# Benvenuto!\n\nInsercisci del testo...';
 updatePreview();
 
 // :::::::::::::::::::::: HELPER FOR INPUT WITH UNDO (Ctrl+z)
