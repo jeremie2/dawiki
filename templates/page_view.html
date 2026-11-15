@@ -16,9 +16,19 @@
         <a class="button" href="{{ edit_url }}">Modifica</a>
     </div>
 
-    <article class="wiki-content">
-        {{ content_html | safe }}
-    </article>
+    <div class="page-layout">
+        {% if toc_html %}
+            <aside class="toc-sidebar">
+                <div class="desktop-only-toc">
+                    {{ toc_html | safe }}
+                </div>
+            </aside>
+        {% endif %}
+
+        <article class="wiki-content">
+            {{ content_html | safe }}
+        </article>
+    </div>
 
     <script src="/static/js/prism.js"></script>
 {% endblock %}

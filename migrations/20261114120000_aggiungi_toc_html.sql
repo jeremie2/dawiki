@@ -1,0 +1,2 @@
+ALTER TABLE pages
+ADD COLUMN toc_html TEXT NOT NULL DEFAULT '';

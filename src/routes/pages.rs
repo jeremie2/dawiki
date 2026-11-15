@@ -20,6 +20,7 @@ pub struct SavePagePayload {
     pub path: String,
     pub markdown: String,
     pub html: String,
+    pub toc_html: String,
 }
 
 #[derive(Serialize)]
@@ -31,6 +32,7 @@ pub struct SavePageResponse {
 pub struct PageRow {
     pub title: String,
     pub html: String,
+    pub toc_html: String,
 }
 
 #[derive(Serialize)]
@@ -60,7 +62,7 @@ async fn view_page_by_path(
     path: &str,
 ) -> AppResult {
     let page = sqlx::query_as::<_, PageRow>(
-        "SELECT title, html FROM pages WHERE path = ?",
+        "SELECT title, html, toc_html FROM pages WHERE path = ?",
     )
     .bind(path)
     .fetch_optional(&state.database)
@@ -74,7 +76,12 @@ async fn view_page_by_path(
         )));
     };
 
-    let context = page_view_context(path, &page.title, &page.html);
+    let context = page_view_context(
+        path,
+        &page.title,
+        &page.html,
+        &page.toc_html,
+    );
 
     render_template(&state.tera, "page_view.html", context)
 }
@@ -103,12 +110,13 @@ pub async fn create_page(
     let safe_html = sanitize_page_html(&payload.html)?;
 
     let result = sqlx::query(
-        "INSERT INTO pages (path, title, markdown, html) VALUES (?, ?, ?, ?)",
+    "INSERT INTO pages (path, title, markdown, html, toc_html) VALUES (?, ?, ?, ?, ?)",
     )
     .bind(&path)
     .bind(&title)
     .bind(&payload.markdown)
     .bind(&safe_html)
+    .bind(&payload.toc_html)
     .execute(&state.database)
     .await;
 
@@ -173,14 +181,15 @@ pub async fn update_page(
     let safe_html = sanitize_page_html(&payload.html)?;
 
     let result = sqlx::query(
-        r#"
-        UPDATE pages
-        SET markdown = ?, html = ?, updated_at = CURRENT_TIMESTAMP
-        WHERE path = ?
-        "#,
+    r#"
+    UPDATE pages
+    SET markdown = ?, html = ?, toc_html = ?, updated_at = CURRENT_TIMESTAMP
+    WHERE path = ?
+    "#,
     )
     .bind(&payload.markdown)
     .bind(&safe_html)
+    .bind(&payload.toc_html)
     .bind(&path)
     .execute(&state.database)
     .await
@@ -214,6 +223,7 @@ fn page_view_context(
     path: &str,
     title: &str,
     content_html: &str,
+    toc_html: &str,
 ) -> Context {
     let segments: Vec<&str> = path.split('/').collect();
 
@@ -240,6 +250,7 @@ fn page_view_context(
     context.insert("path", &path);
     context.insert("breadcrumb", &breadcrumb);
     context.insert("content_html", &content_html);
+    context.insert("toc_html", &toc_html);
     context.insert("edit_url", &format!("/~modifica/{path}"));
 
     context

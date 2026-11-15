@@ -6,20 +6,19 @@ following functions into doc/js_into_editor.md
 // :::::::::::::::::::::: INIT
 
 const markdownInput = document.getElementById('markdown-input');
+let currentTocHtml = "";
 const preview = document.getElementById('preview');
 
 function updatePreview() {
     preview.innerHTML = marked.parse(markdownInput.value);
 
-    generateTableOfContents(preview);
+    currentTocHtml = DOMPurify.sanitize(
+        generateTableOfContents(preview) || ""
+    );
     parseUbuntuVersions(preview);
     parseForumTag(preview);
 
     preview.innerHTML = DOMPurify.sanitize(preview.innerHTML);
-
-    if (typeof DOMPurify !== "undefined") {
-        preview.innerHTML = DOMPurify.sanitize(preview.innerHTML);
-    }
 
     if (typeof Prism !== "undefined") {
         Prism.highlightAllUnder(preview);
@@ -351,7 +350,8 @@ async function savePage() {
     const payload = {
         path: pagePath,
         markdown: markdownInput.value,
-        html: DOMPurify.sanitize(preview.innerHTML)
+        html: DOMPurify.sanitize(preview.innerHTML),
+        toc_html: currentTocHtml
     };
 
     const form = document.getElementById("page-editor-form");

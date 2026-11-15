@@ -149,9 +149,9 @@ function generateTableOfContents(previewArea) {
     maxLevel = 1;
   }
 
-  if (!foundPlaceholder) return;
+  if (!foundPlaceholder) return "";
 
-  if (isTagInsideCode(foundPlaceholder, previewArea)) return;
+  if (isTagInsideCode(foundPlaceholder, previewArea)) return "";
 
   const selectors = [];
 
@@ -161,7 +161,7 @@ function generateTableOfContents(previewArea) {
 
   const headings = previewArea.querySelectorAll(selectors.join(', '));
 
-  if (headings.length === 0) return;
+  if (headings.length === 0) return "";
 
   const tocOl = generateTocOl(headings);
 
@@ -208,6 +208,8 @@ function generateTableOfContents(previewArea) {
       });
     });
   }
+
+  return tocOl;
 }
 
 // ::::::::::::::::::::::::::::::::::::::
