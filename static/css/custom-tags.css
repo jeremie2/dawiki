@@ -185,10 +185,23 @@
 
 @media (min-width: 1024px) {
     .wiki-content .ubuntu-alert,
-    .wiki-content .link-forum-box,
-    #preview .link-forum-box,
-    #preview .ubuntu-alert {
+    .wiki-content .link-forum-box {
         margin-left: auto;
+    }
+
+    #preview .desktop-only-toc,
+    #preview .toc-sidebar {
+        display: none !important;
+    }
+
+    #preview details.mobile-only-toc,
+    #preview .mobile-only-toc {
+        display: block !important;
+    }
+
+    #preview .ubuntu-alert,
+    #preview .link-forum-box {
+        margin-left: 0 !important;
     }
 }
 
