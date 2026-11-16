@@ -4,6 +4,18 @@
 
 {% block title %}{{ heading }} - DaWiki{% endblock title %}
 
+{% block page_title %}
+    {{ heading }}
+{% endblock page_title %}
+
+{% block breadcrumb %}
+    {% if mode == "edit" %}
+        {{ path }}
+    {% else %}
+        Nuova pagina
+    {% endif %}
+{% endblock breadcrumb %}
+
 {% block head %}
     <link rel="stylesheet" href="/static/css/editor.css">
 
@@ -15,8 +27,6 @@
 {% endblock head %}
 
 {% block content %}
-<h1>{{ heading }}</h1>
-
 <form
     id="page-editor-form"
     data-mode="{{ mode }}"

@@ -229,7 +229,6 @@ fn page_view_context(
 
     let breadcrumb = segments
         .iter()
-        .take(segments.len().saturating_sub(1))
         .scan(String::new(), |accumulator, segment| {
             if accumulator.is_empty() {
                 accumulator.push_str(segment);

@@ -2,20 +2,18 @@
 
 {% block title %}{{ title }} - DaWiki{% endblock %}
 
+{% block page_title %}
+    {{ title | default(value="Titolo non disponibile") }}
+{% endblock page_title %}
+
+{% block breadcrumb %}
+    {% for item in breadcrumb %}
+        <a href="{{ item.href }}">{{ item.label }}</a>
+        {% if not loop.last %}/{% endif %}
+    {% endfor %}
+{% endblock breadcrumb %}
+
 {% block content %}
-    <nav class="breadcrumb">
-        <a href="/">Home</a>
-
-        {% for item in breadcrumb %}
-            /
-            <a href="{{ item.href }}">{{ item.label }}</a>
-        {% endfor %}
-    </nav>
-
-    <div class="page-actions">
-        <a class="button" href="{{ edit_url }}">Modifica</a>
-    </div>
-
     <div class="page-layout">
         {% if toc_html %}
             <aside class="toc-sidebar">

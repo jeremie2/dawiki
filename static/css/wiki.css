@@ -174,11 +174,6 @@ button {
     text-decoration-thickness: 2px;
 }
 
-.wiki-content a:hover,
-#preview a:hover {
-    color: #ff9c61;
-}
-
 /* Inline code: `testo` */
 .wiki-content code,
 #preview code {
@@ -347,7 +342,7 @@ button {
 
 @media screen and (prefers-color-scheme: light) {
     body {
-        background-color: #d2d2d2;
+        background-color: #c8d1df;
         color: #333;
     }
 
@@ -421,11 +416,6 @@ button {
     #preview a {
         color: #000000;
         text-decoration-color: #cb650a;
-    }
-
-    .wiki-content a:hover,
-    #preview a:hover {
-        color: #cb650a;
     }
 
     .wiki-content code,

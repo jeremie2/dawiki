@@ -6,18 +6,59 @@
     <title>{% block title %}DaWiki{% endblock title %}</title>
 
     <link rel="stylesheet" href="/static/css/wiki.css">
+    <link rel="stylesheet" href="/static/css/site-header.css">
     <link rel="stylesheet" href="/static/css/custom-tags.css">
     <link rel="stylesheet" href="/static/css/prism.css">
 
     {% block head %}{% endblock head %}
 </head>
 <body>
-    <header class="site-header">
-        <a href="/" class="site-title">Wiki di ubuntu-it</a>
-    </header>
+<header class="site-header">
+    <div class="site-header-top">
+        <a class="site-brand" href="/">Wiki ubuntu-it</a>
 
-    <main class="site-main {% block main_class %}{% endblock main_class %}">
-        {% block content %}{% endblock content %}
-    </main>
+        <nav class="site-nav" aria-label="Navigazione principale">
+            <a href="/partecipa">Partecipa</a>
+            <a href="/faq">FAQ</a>
+            <a href="https://ubuntu-it.org/">ubuntu-it</a>
+            <a href="/registrati">Registrati</a>
+            <a href="/entra">Entra</a>
+        </nav>
+    </div>
+
+    <div class="page-title-area">
+        <h1 class="page-title">
+            {% block page_title %}Titolo di prova{% endblock page_title %}
+        </h1>
+
+        <nav class="breadcrumb" aria-label="Percorso di navigazione">
+            {% block breadcrumb %}
+                <a href="/">Home</a>
+            {% endblock breadcrumb %}
+        </nav>
+    </div>
+</header>
+
+<div class="page-actions-bar">
+    <nav class="page-actions" aria-label="Azioni sulla pagina">
+        <a href="/modifica">Modifica</a>
+        <a href="/cronologia">Cronologia</a>
+        <a href="/raw">Raw-text</a>
+
+        <details class="technical-menu">
+            <summary>Altre azioni</summary>
+            <div class="technical-menu-panel">
+                <a href="/allegati">Allegati</a>
+                <a href="/rinomina">Rinomina pagina</a>
+                <a href="/cancella">Cancella pagina</a>
+                <a href="/ripristina">Ripristina versione</a>
+            </div>
+        </details>
+    </nav>
+</div>
+
+<main class="site-main {% block main_class %}{% endblock main_class %}">
+    {% block content %}{% endblock content %}
+</main>
 </body>
 </html>
