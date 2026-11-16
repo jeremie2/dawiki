@@ -53,10 +53,10 @@
 /* ########## SIDEBAR TOC ############ */
 /* ################################### */
 
-.toc-sidebar {
+.toc-sidebar,
+#sidebar-toc {
     width: 320px;
     min-width: 0;
-    flex: 0 0 320px;
     padding: 20px 24px 20px 28px;
     margin-bottom: 12px;
     background-color: #1d1e29;
@@ -65,7 +65,20 @@
     font-size: 16px;
 }
 
-.toc-sidebar .desktop-only-toc {
+.toc-sidebar {
+    flex: 0 0 320px;
+}
+
+#sidebar-toc {
+    display: none;
+}
+
+#sidebar-toc.has-toc {
+    display: block;
+}
+
+.toc-sidebar .desktop-only-toc,
+#sidebar-toc .desktop-only-toc {
     width: 100%;
     margin: 0;
     padding: 0;
@@ -74,53 +87,30 @@
     border-radius: 0;
 }
 
-.toc-sidebar ol {
+.toc-sidebar ol,
+#sidebar-toc ol {
     margin: 0;
     padding-left: 1.25rem;
 }
 
-.toc-sidebar ol ol {
+.toc-sidebar ol ol,
+#sidebar-toc ol ol {
     padding-left: 1.25rem;
 }
 
-.toc-sidebar li {
+.toc-sidebar li,
+#sidebar-toc li {
     margin-bottom: 5px;
 }
 
-.toc-sidebar a {
+.toc-sidebar a,
+#sidebar-toc a {
     font-size: 16px;
     text-decoration-thickness: 1px;
 }
 
-.toc-sidebar .desktop-only-toc {
-    width: 100%;
-    margin: 0;
-    padding: 0 10px 0 0;
-    background-color: transparent;
-    box-shadow: none;
-    border-radius: 0;
-}
-
-.toc-sidebar ol {
-    margin-top: 0;
-}
-
-.toc-sidebar ol {
-    margin: 0;
-    padding-left: 1.25rem;
-}
-
-.toc-sidebar ol ol {
-    padding-left: 1.25rem;
-}
-
-.toc-sidebar li {
-    margin-bottom: 5px;
-}
-
-.toc-sidebar a {
-    font-size: 16px;
-    text-decoration-thickness: 1px;
+.mobile-only-toc {
+    display: block;
 }
 
 @media (max-width: 1023.98px) {
@@ -149,44 +139,6 @@
     .toc-container.mobile-only-toc {
         display: none !important;
     }
-}
-
-#sidebar-toc {
-    display: none;
-    width: 320px;
-    min-width: 0;
-    padding: 20px;
-    margin-bottom: 12px;
-    background-color: #1d1e29;
-    border-radius: 10px;
-    box-shadow: 0 1px 8px #000;
-    font-size: 16px;
-}
-
-#sidebar-toc.has-toc {
-    display: block;
-}
-
-#sidebar-toc .desktop-only-toc {
-    width: 100%;
-    margin: 0;
-    padding: 0 10px 0 0;
-    background-color: transparent;
-    box-shadow: none;
-    border-radius: 0;
-}
-
-#sidebar-toc ol {
-    margin-top: 0;
-}
-
-#sidebar-toc a {
-    font-size: 16px;
-    text-decoration-thickness: 1px;
-}
-
-.mobile-only-toc {
-    display: block;
 }
 
 /* ################################### */
@@ -237,11 +189,16 @@
 
 @media screen and (prefers-color-scheme: light) {
     .toc-container,
+    .toc-sidebar,
     #sidebar-toc {
         background-color: #fcfcfc;
         box-shadow: 0 1px 8px #cdcdcd;
     }
 
+    .toc-sidebar a {
+        color: #2e2e2e;
+    }
+    
     .toc-container a {
         color: #2e2e2e;
     }
