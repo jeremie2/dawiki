@@ -12,6 +12,7 @@
 
 body {
     margin: 20px;
+    margin-top: 0px;
     font-family: sans-serif;
     font-size: 18px;
     background-color: #232323;
@@ -377,7 +378,7 @@ button {
     a:visited,
     a:hover,
     a:active {
-        color: #000;
+        color: #5a5a5a;
     }
 
     table {
@@ -415,7 +416,7 @@ button {
     .wiki-content a,
     #preview a {
         color: #000000;
-        text-decoration-color: #cb650a;
+        text-decoration-color: ##ec8314;
     }
 
     .wiki-content code,

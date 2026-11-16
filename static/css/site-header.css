@@ -19,7 +19,7 @@
 .site-brand {
     color: #e1e1e1;
     font-weight: bold;
-    font-size: 25px;
+    font-size: 20px;
     flex-shrink: 0;
 }
 
@@ -43,13 +43,14 @@
 }
 
 .page-title-area {
-    padding: 10px 20px 14px;
+    /*padding: 10px 20px 14px;*/
+    padding-left: 20px;
 }
 
 .page-title {
     margin: 0 0 8px;
     color: #e1e1e1;
-    font-size: 50px;
+    font-size: 45px;
     font-weight: 700;
     line-height: 1.2;
 }
@@ -61,7 +62,7 @@
 
 .breadcrumb a {
     color: #9ecbff;
-    font-size: 20px;
+    font-size: 16px;
     text-decoration: none;
 }
 
@@ -112,7 +113,6 @@
 
 .page-actions-bar {
     padding: 10px 20px;
-    margin-bottom: 20px;
 }
 
 .page-actions {
@@ -163,9 +163,9 @@
     z-index: 20;
     min-width: 220px;
     padding: 10px;
-    background: var(--header-menu-bg);
-    border: 1px solid var(--header-menu-border);
-    border-radius: 6px;
+    background-color: #232323;
+    border: 1px solid #d05d19;
+    border-radius: 10px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
 }
 
@@ -183,10 +183,6 @@
     color: var(--header-link-hover);
 }
 
-.breadcrumb a {
-    font-size: 20px;
-}
-
 /* ################################### */
 /* ########## LIGHT THEME ############ */
 /* ################################### */
@@ -194,7 +190,7 @@
 @media screen and (prefers-color-scheme: light) {
     .site-header {
         background-color: #f0f0f0;
-        box-shadow: 0 1px 8px #cdcdcd;
+        box-shadow: 0 1px 8px #9cb2d4;
     }
 
     .page-title {
@@ -206,6 +202,10 @@
         color: black;
     }
 
+    .page-actions {
+        font-size: 16px;
+    }
+
     .page-title {
         color: #222222;
     }
@@ -215,13 +215,18 @@
     }
 
     .breadcrumb a {
-        color: #0b5ed7;
+        color: #d7440b;
     }
 
     .breadcrumb a:hover,
     .breadcrumb a:focus-visible {
         color: #084298;
-    }  
+    }
+
+    .technical-menu-panel {
+        background-color: #c8d1df;
+        color: #333;
+    }
 }
 
 /* ################################### */
