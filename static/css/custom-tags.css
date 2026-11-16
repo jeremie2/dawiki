@@ -183,6 +183,15 @@
     box-shadow: 0 1px 8px #1f1f1f;
 }
 
+@media (min-width: 1024px) {
+    .wiki-content .ubuntu-alert,
+    .wiki-content .link-forum-box,
+    #preview .link-forum-box,
+    #preview .ubuntu-alert {
+        margin-left: auto;
+    }
+}
+
 /* ################################### */
 /* ############ LIGHT MODE ########### */
 /* ################################### */
