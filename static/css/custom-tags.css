@@ -189,19 +189,26 @@
         margin-left: auto;
     }
 
-    #preview .desktop-only-toc,
-    #preview .toc-sidebar {
+    /* Nella vista divisa l'indice rimane dentro l'anteprima */
+    .editor-container.split-view #preview .desktop-only-toc,
+    .editor-container.split-view #preview .toc-sidebar {
         display: none !important;
     }
 
-    #preview details.mobile-only-toc,
-    #preview .mobile-only-toc {
+    .editor-container.split-view #preview .mobile-only-toc {
         display: block !important;
     }
 
-    #preview .ubuntu-alert,
-    #preview .link-forum-box {
+    /* Nella vista divisa i riquadri restano a sinistra */
+    .editor-container.split-view #preview .ubuntu-alert,
+    .editor-container.split-view #preview .link-forum-box {
         margin-left: 0 !important;
+    }
+
+    /* Nella vista solo anteprima i riquadri vanno a destra */
+    .editor-container.only-preview #preview .ubuntu-alert,
+    .editor-container.only-preview #preview .link-forum-box {
+        margin-left: auto;
     }
 }
 
