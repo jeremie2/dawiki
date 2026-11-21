@@ -4,6 +4,7 @@
 {% block content %}
 <h2>Benvenuto, {{ nickname }}</h2>
 <p>Hai effettuato l'accesso. ID utente: {{ user_id }}.</p>
+<p>Ruolo: <strong>{{ role }}</strong></p>
 <form method="post" action="/~logout">
   <button type="submit">Esci</button>
 </form>

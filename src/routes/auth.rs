@@ -80,9 +80,36 @@ pub struct LoginForm {
     password: String,
 }
 
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum UserRole {
+    User,
+    Staff,
+    Admin,
+}
+
+impl UserRole {
+    pub fn from_db(value: &str) -> Result<Self, AppError> {
+        match value {
+            "user" => Ok(Self::User),
+            "staff" => Ok(Self::Staff),
+            "admin" => Ok(Self::Admin),
+            _ => Err(AppError::Internal("Ruolo utente non riconosciuto.".into())),
+        }
+    }
+
+    pub fn as_str(self) -> &'static str {
+        match self {
+            Self::User => "user",
+            Self::Staff => "staff",
+            Self::Admin => "admin",
+        }
+    }
+}
+
 pub struct CurrentUser {
     pub id: i64,
     pub nickname: String,
+    pub role: UserRole,
 }
 
 fn token_hash(token: &str) -> String {
@@ -102,15 +129,17 @@ pub async fn current_user(state: &AppState, headers: &HeaderMap) -> Result<Optio
     let Some(token) = session_token(headers) else {
         return Ok(None);
     };
-    let user = sqlx::query_as::<_, (i64, String)>(
-        "SELECT u.id, u.nickname FROM users u
+    let user = sqlx::query_as::<_, (i64, String, String)>(
+        "SELECT u.id, u.nickname, u.role FROM users u
          JOIN user_sessions s ON s.user_id = u.id
          WHERE s.token_hash = ? AND s.expires_at > CURRENT_TIMESTAMP",
     )
     .bind(token_hash(token))
     .fetch_optional(&state.database)
     .await?;
-    Ok(user.map(|(id, nickname)| CurrentUser { id, nickname }))
+    user.map(|(id, nickname, role)| {
+        Ok(CurrentUser { id, nickname, role: UserRole::from_db(&role)? })
+    }).transpose()
 }
 
 pub async fn show_login(State(state): State<Arc<AppState>>) -> Result<Html<String>, AppError> {
@@ -175,6 +204,7 @@ pub async fn profile(
     let mut context = Context::new();
     context.insert("nickname", &user.nickname);
     context.insert("user_id", &user.id);
+    context.insert("role", user.role.as_str());
     Ok(Html(state.tera.render("profile.html", &context)?).into_response())
 }
 
