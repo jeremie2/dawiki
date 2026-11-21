@@ -41,6 +41,11 @@ async fn main() {
 
     let app = Router::new()
         .route("/", get(routes::pages::view_home))
+        .route("/~registrazione", get(routes::auth::show_registration))
+        .route("/~registrazione", post(routes::auth::register))
+        .route("/~login", get(routes::auth::show_login).post(routes::auth::login))
+        .route("/~profilo", get(routes::auth::profile))
+        .route("/~logout", post(routes::auth::logout))
         .route("/~nuova", get(routes::pages::show_create_form))
         .route("/~nuova", post(routes::pages::create_page))
         .route("/~modifica/{*path}", get(routes::pages::show_edit_form))

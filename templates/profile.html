@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Profilo - DaWiki{% endblock title %}
+{% block page_title %}Profilo{% endblock page_title %}
+{% block content %}
+<h2>Benvenuto, {{ nickname }}</h2>
+<p>Hai effettuato l'accesso. ID utente: {{ user_id }}.</p>
+<form method="post" action="/~logout">
+  <button type="submit">Esci</button>
+</form>
+{% endblock content %}

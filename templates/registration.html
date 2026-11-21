@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Registrazione - DaWiki{% endblock title %}
+{% block page_title %}Registrazione{% endblock page_title %}
+{% block content %}
+<h2>Crea un account di prova</h2>
+<form method="post" action="/~registrazione">
+    <p><label for="nickname">Nickname</label><br>
+    <input id="nickname" name="nickname" minlength="3" maxlength="40" pattern="[A-Za-z0-9_-]+" autocomplete="username" required></p>
+    <p><label for="email">Email</label><br>
+    <input id="email" name="email" type="email" maxlength="254" autocomplete="email" required></p>
+    <p><label for="password">Password (almeno 12 caratteri)</label><br>
+    <input id="password" name="password" type="password" minlength="12" maxlength="1024" autocomplete="new-password" required></p>
+    <button type="submit">Registrati</button>
+</form>
+{% endblock content %}

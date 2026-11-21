@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Login - DaWiki{% endblock title %}
+{% block page_title %}Accedi{% endblock page_title %}
+{% block content %}
+<h2>Accedi al wiki</h2>
+<form method="post" action="/~login">
+  <p><label for="email">Email</label><br>
+  <input id="email" name="email" type="email" autocomplete="username" required></p>
+  <p><label for="password">Password</label><br>
+  <input id="password" name="password" type="password" autocomplete="current-password" required></p>
+  <button type="submit">Entra</button>
+</form>
+{% endblock content %}

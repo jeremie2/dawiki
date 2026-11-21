@@ -2,11 +2,14 @@ use axum::{
     extract::{Path, State},
     response::{Html, IntoResponse, Response},
     Json,
+    http::{HeaderMap, StatusCode},
+    response::Redirect,
 };
 use serde::{Deserialize, Serialize};
 use tera::Context;
 
 use crate::app_state::AppState;
+use crate::routes::auth::current_user;
 use crate::error::AppError;
 use crate::html_sanitizer::sanitize_page_html;
 use crate::page_path::{normalize_page_path, page_title_from_path};
@@ -88,7 +91,11 @@ async fn view_page_by_path(
 
 pub async fn show_create_form(
     State(state): State<std::sync::Arc<AppState>>,
+    headers: HeaderMap,
 ) -> AppResult {
+    if current_user(&state, &headers).await?.is_none() {
+        return Ok(Redirect::to("/~login").into_response());
+    }
     let context = page_editor_context(
         "Crea nuova pagina",
         "create",
@@ -101,8 +108,12 @@ pub async fn show_create_form(
 
 pub async fn create_page(
     State(state): State<std::sync::Arc<AppState>>,
+    headers: HeaderMap,
     Json(payload): Json<SavePagePayload>,
 ) -> AppResult {
+    if current_user(&state, &headers).await?.is_none() {
+        return Ok((StatusCode::UNAUTHORIZED, "Devi effettuare il login per creare pagine.").into_response());
+    }
     let path = normalize_page_path(&payload.path)
         .map_err(|error| AppError::BadRequest(error.to_string()))?;
 
@@ -141,7 +152,11 @@ pub async fn create_page(
 pub async fn show_edit_form(
     State(state): State<std::sync::Arc<AppState>>,
     Path(raw_path): Path<String>,
+    headers: HeaderMap,
 ) -> AppResult {
+    if current_user(&state, &headers).await?.is_none() {
+        return Ok(Redirect::to("/~login").into_response());
+    }
     let path = normalize_page_path(&raw_path)
         .map_err(|error| AppError::BadRequest(error.to_string()))?;
 
@@ -173,8 +188,12 @@ pub async fn show_edit_form(
 pub async fn update_page(
     State(state): State<std::sync::Arc<AppState>>,
     Path(raw_path): Path<String>,
+    headers: HeaderMap,
     Json(payload): Json<SavePagePayload>,
 ) -> AppResult {
+    if current_user(&state, &headers).await?.is_none() {
+        return Ok((StatusCode::UNAUTHORIZED, "Devi effettuare il login per modificare pagine.").into_response());
+    }
     let path = normalize_page_path(&raw_path)
         .map_err(|error| AppError::BadRequest(error.to_string()))?;
 
