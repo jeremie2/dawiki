@@ -9,7 +9,7 @@ use serde::{Deserialize, Serialize};
 use tera::Context;
 
 use crate::app_state::AppState;
-use crate::routes::auth::current_user;
+use crate::routes::auth::{current_user, UserRole};
 use crate::error::AppError;
 use crate::html_sanitizer::sanitize_page_html;
 use crate::page_path::{normalize_page_path, page_title_from_path};
@@ -160,20 +160,26 @@ pub async fn show_edit_form(
     let path = normalize_page_path(&raw_path)
         .map_err(|error| AppError::BadRequest(error.to_string()))?;
 
-    let markdown_option = sqlx::query_scalar::<_, String>(
-        "SELECT markdown FROM pages WHERE path = ?",
+    let page_option = sqlx::query_as::<_, (String, i64)>(
+        "SELECT markdown, is_protected FROM pages WHERE path = ?",
     )
     .bind(&path)
     .fetch_optional(&state.database)
     .await
     .map_err(|error| AppError::Internal(error.to_string()))?;
 
-    let Some(markdown_content) = markdown_option else {
+    let Some((markdown_content, is_protected)) = page_option else {
         return Err(AppError::NotFound(format!(
             "La pagina /{} non esiste.",
             path
         )));
     };
+
+    // Protected pages are editable only by staff and administrators.
+    let user = current_user(&state, &headers).await?.expect("Authentication checked above");
+    if is_protected != 0 && !can_edit_protected(user.role) {
+        return Ok((StatusCode::FORBIDDEN, "Non hai i permessi per modificare questa pagina.").into_response());
+    }
 
     let context = page_editor_context(
         &format!("Modifica /{path}"),
@@ -197,24 +203,51 @@ pub async fn update_page(
     let path = normalize_page_path(&raw_path)
         .map_err(|error| AppError::BadRequest(error.to_string()))?;
 
+    let user = current_user(&state, &headers).await?.expect("Authentication checked above");
+    let protected_editor = can_edit_protected(user.role);
+    let page_protection = sqlx::query_scalar::<_, i64>(
+        "SELECT is_protected FROM pages WHERE path = ?",
+    )
+    .bind(&path)
+    .fetch_optional(&state.database)
+    .await?;
+
+    let Some(is_protected) = page_protection else {
+        return Err(AppError::NotFound(format!("La pagina /{} non esiste.", path)));
+    };
+    if is_protected != 0 && !protected_editor {
+        return Ok((StatusCode::FORBIDDEN, "Non hai i permessi per modificare questa pagina.").into_response());
+    }
+
     let safe_html = sanitize_page_html(&payload.html)?;
 
     let result = sqlx::query(
     r#"
     UPDATE pages
     SET markdown = ?, html = ?, toc_html = ?, updated_at = CURRENT_TIMESTAMP
-    WHERE path = ?
+    WHERE path = ? AND (is_protected = 0 OR ? = 1)
     "#,
     )
     .bind(&payload.markdown)
     .bind(&safe_html)
     .bind(&payload.toc_html)
     .bind(&path)
+    .bind(protected_editor)
     .execute(&state.database)
     .await
     .map_err(|error| AppError::Internal(error.to_string()))?;
 
     if result.rows_affected() == 0 {
+        // The page might have been protected after the initial permission check.
+        let still_exists = sqlx::query_scalar::<_, i64>(
+            "SELECT 1 FROM pages WHERE path = ?",
+        )
+        .bind(&path)
+        .fetch_optional(&state.database)
+        .await?;
+        if still_exists.is_some() {
+            return Ok((StatusCode::FORBIDDEN, "Non hai i permessi per modificare questa pagina.").into_response());
+        }
         return Err(AppError::NotFound(format!(
             "La pagina /{} non esiste.",
             path
@@ -298,4 +331,21 @@ fn render_template(
         .map(Html)
         .map(IntoResponse::into_response)
         .map_err(|error| AppError::Internal(error.to_string()))
+}
+
+/// Staff and administrators may edit pages marked as protected.
+fn can_edit_protected(role: UserRole) -> bool {
+    matches!(role, UserRole::Staff | UserRole::Admin)
+}
+
+#[cfg(test)]
+mod permission_tests {
+    use super::*;
+
+    #[test]
+    fn only_staff_and_admin_can_edit_protected_pages() {
+        assert!(!can_edit_protected(UserRole::User));
+        assert!(can_edit_protected(UserRole::Staff));
+        assert!(can_edit_protected(UserRole::Admin));
+    }
 }

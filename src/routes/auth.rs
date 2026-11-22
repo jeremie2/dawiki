@@ -9,6 +9,7 @@ use tera::Context;
 
 use crate::{app_state::AppState, error::AppError};
 
+/// Form fields submitted by the local registration page.
 #[derive(Deserialize)]
 pub struct RegistrationForm {
     nickname: String,
@@ -16,11 +17,15 @@ pub struct RegistrationForm {
     password: String,
 }
 
+/// Renders the registration form.
 pub async fn show_registration(State(state): State<Arc<AppState>>) -> Result<Html<String>, AppError> {
     let html = state.tera.render("registration.html", &Context::new())?;
     Ok(Html(html))
 }
 
+/// Validates a registration request and stores an Argon2 password hash.
+///
+/// The database enforces unique nicknames and email addresses.
 pub async fn register(
     State(state): State<Arc<AppState>>,
     Form(form): Form<RegistrationForm>,
@@ -41,6 +46,7 @@ pub async fn register(
         return Err(AppError::BadRequest("La password deve contenere almeno 12 caratteri (massimo 1024 byte).".into()));
     }
 
+    // Each password gets its own random salt. Never store plaintext passwords.
     let salt = SaltString::generate(&mut OsRng);
     let password_hash = Argon2::default()
         .hash_password(form.password.as_bytes(), &salt)
@@ -72,14 +78,17 @@ pub async fn register(
 }
 
 
+/// Cookie name used to carry the opaque session token.
 const SESSION_COOKIE: &str = "dawiki_session";
 
+/// Credentials submitted by the local login page.
 #[derive(Deserialize)]
 pub struct LoginForm {
     email: String,
     password: String,
 }
 
+/// Application roles, independent of the authentication method.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum UserRole {
     User,
@@ -88,6 +97,7 @@ pub enum UserRole {
 }
 
 impl UserRole {
+    /// Converts a stored role into a typed value; rejects unknown roles.
     pub fn from_db(value: &str) -> Result<Self, AppError> {
         match value {
             "user" => Ok(Self::User),
@@ -97,6 +107,7 @@ impl UserRole {
         }
     }
 
+    /// Returns the canonical database representation of this role.
     pub fn as_str(self) -> &'static str {
         match self {
             Self::User => "user",
@@ -106,16 +117,21 @@ impl UserRole {
     }
 }
 
+/// Identity and role associated with a valid session.
 pub struct CurrentUser {
     pub id: i64,
     pub nickname: String,
     pub role: UserRole,
 }
 
+/// Hashes a high-entropy session token before storing or looking it up.
 fn token_hash(token: &str) -> String {
     format!("{:x}", Sha256::digest(token.as_bytes()))
 }
 
+/// Extracts a syntactically valid session token from the Cookie header.
+///
+/// This does not prove that the session exists or is still valid.
 fn session_token(headers: &HeaderMap) -> Option<&str> {
     let cookies = headers.get(header::COOKIE)?.to_str().ok()?;
     cookies.split(';').find_map(|part| {
@@ -125,6 +141,9 @@ fn session_token(headers: &HeaderMap) -> Option<&str> {
     })
 }
 
+/// Resolves a session cookie to the current user and their role.
+///
+/// Returns `Ok(None)` when no valid session exists; database errors are propagated.
 pub async fn current_user(state: &AppState, headers: &HeaderMap) -> Result<Option<CurrentUser>, AppError> {
     let Some(token) = session_token(headers) else {
         return Ok(None);
@@ -142,10 +161,12 @@ pub async fn current_user(state: &AppState, headers: &HeaderMap) -> Result<Optio
     }).transpose()
 }
 
+/// Renders the local login form.
 pub async fn show_login(State(state): State<Arc<AppState>>) -> Result<Html<String>, AppError> {
     Ok(Html(state.tera.render("login.html", &Context::new())?))
 }
 
+/// Verifies local credentials and creates a database-backed session.
 pub async fn login(
     State(state): State<Arc<AppState>>,
     Form(form): Form<LoginForm>,
@@ -169,6 +190,7 @@ pub async fn login(
         return Err(AppError::BadRequest("Email o password non corretti.".into()));
     }
 
+    // Only the browser receives the raw token; SQLite stores its SHA-256 hash.
     let mut bytes = [0u8; 32];
     OsRng.fill_bytes(&mut bytes);
     let token: String = bytes.iter().map(|byte| format!("{byte:02x}")).collect();
@@ -194,6 +216,7 @@ pub async fn login(
     Ok(response)
 }
 
+/// Shows the profile of the authenticated user or redirects to login.
 pub async fn profile(
     State(state): State<Arc<AppState>>,
     headers: HeaderMap,
@@ -208,6 +231,7 @@ pub async fn profile(
     Ok(Html(state.tera.render("profile.html", &context)?).into_response())
 }
 
+/// Revokes the presented session and expires its browser cookie.
 pub async fn logout(
     State(state): State<Arc<AppState>>,
     headers: HeaderMap,
