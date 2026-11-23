@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" sizes="155x155" href="/static/favicon.png">
     <title>{% block title %}DaWiki{% endblock title %}</title>
 
     <link rel="stylesheet" href="/static/css/wiki.css">
@@ -18,11 +19,19 @@
         <a class="site-brand" href="/">Wiki ubuntu-it</a>
 
         <nav class="site-nav" aria-label="Navigazione principale">
-            <a href="/partecipa">Partecipa</a>
-            <a href="/faq">FAQ</a>
-            <a href="https://ubuntu-it.org/">ubuntu-it</a>
-            <a href="/registrati">Registrati</a>
-            <a href="/entra">Entra</a>
+            <a href="/Partecipa">Partecipa</a>
+            <a href="/FAQ">FAQ</a>
+            <a href="https://www.ubuntu-it.org/">ubuntu-it</a>
+            {% if authenticated %}
+                <a href="{{ personal_page_url }}">{{ current_nickname }}</a>
+                <a href="/~profilo">Impostazioni</a>
+                <form class="nav-logout" method="post" action="/~logout">
+                    <button type="submit" class="nav-text-link">Esci</button>
+                </form>
+            {% else %}
+                <a href="/~registrazione">Registrati</a>
+                <a href="/~login">Entra</a>
+            {% endif %}
         </nav>
     </div>
 
@@ -41,19 +50,13 @@
 
 <div class="page-actions-bar">
     <nav class="page-actions" aria-label="Azioni sulla pagina">
-        <a href="/modifica">Modifica</a>
-        <a href="/cronologia">Cronologia</a>
-        <a href="/raw">Raw-text</a>
-
-        <details class="technical-menu">
-            <summary>Altre azioni</summary>
-            <div class="technical-menu-panel">
-                <a href="/allegati">Allegati</a>
-                <a href="/rinomina">Rinomina pagina</a>
-                <a href="/cancella">Cancella pagina</a>
-                <a href="/ripristina">Ripristina versione</a>
-            </div>
-        </details>
+        {% if can_edit_page %}
+            <a href="{{ edit_url }}">Modifica</a>
+        {% elif not authenticated %}
+            <a href="/~login">Accedi per modificare</a>
+        {% endif %}
+        {% if authenticated %}<a href="/~nuova">Nuova pagina</a>{% endif %}
+        {% if is_protected %}<span class="protected-label">Pagina protetta</span>{% endif %}
     </nav>
 </div>
 

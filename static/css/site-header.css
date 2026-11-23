@@ -263,3 +263,59 @@
         gap: 10px;
     }
 }
+
+/* Real navigation controls, including the POST logout action. */
+.nav-logout { margin: 0; }
+.nav-logout .nav-text-link {
+    font: inherit;
+    color: var(--header-link);
+    background: transparent;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+}
+.nav-logout .nav-text-link:hover, .nav-logout .nav-text-link:focus-visible {
+    color: var(--header-link-hover);
+    text-decoration: underline;
+}
+.protected-label { font-size: 0.9rem; opacity: 0.75; }
+@media (max-width: 700px) {
+    .site-nav { flex-wrap: wrap; margin-left: 0; }
+}
+
+/* A POST button styled like the other navigation links. */
+.site-nav .nav-text-link { font-size: 16px; text-decoration: none; }
+
+/* Keep the POST logout control aligned with the surrounding nav links. */
+.site-nav .nav-logout {
+    display: flex;
+    align-items: center;
+    align-self: center;
+}
+.site-nav .nav-logout .nav-text-link {
+    display: inline-flex;
+    align-items: center;
+    line-height: normal;
+}
+
+/* Center the page heading while keeping the breadcrumb left-aligned. */
+.page-title-area .page-title {
+    text-align: center;
+}
+
+/* The form should not create a separate flex item with its own baseline. */
+.site-nav .nav-logout {
+    display: contents;
+}
+
+/* Match the line box of the adjacent navigation anchors. */
+.site-nav .nav-logout .nav-text-link {
+    display: inline;
+    font: inherit;
+    font-size: 16px;
+    line-height: inherit;
+    vertical-align: baseline;
+    margin: 0;
+    padding: 0;
+    appearance: none;
+}

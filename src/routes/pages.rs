@@ -18,6 +18,7 @@ pub const HOME_PAGE_PATH: &str = "Documentazione";
 
 pub type AppResult = Result<Response, AppError>;
 
+/// JSON submitted by the editor. Page protection is server-controlled.
 #[derive(Deserialize)]
 pub struct SavePagePayload {
     pub path: String,
@@ -31,11 +32,13 @@ pub struct SavePageResponse {
     pub redirect_url: String,
 }
 
+/// Data used to render a wiki page and its permissions.
 #[derive(sqlx::FromRow)]
 pub struct PageRow {
     pub title: String,
     pub html: String,
     pub toc_html: String,
+    pub is_protected: i64,
 }
 
 #[derive(Serialize)]
@@ -44,28 +47,34 @@ pub struct BreadcrumbItem {
     pub href: String,
 }
 
+/// Renders the wiki home page.
 pub async fn view_home(
     State(state): State<std::sync::Arc<AppState>>,
+    headers: HeaderMap,
 ) -> AppResult {
-    view_page_by_path(&state, HOME_PAGE_PATH).await
+    view_page_by_path(&state, HOME_PAGE_PATH, &headers).await
 }
 
+/// Resolves and renders a wiki page by path.
 pub async fn view_page(
     State(state): State<std::sync::Arc<AppState>>,
     Path(raw_path): Path<String>,
+    headers: HeaderMap,
 ) -> AppResult {
     let path = normalize_page_path(&raw_path)
         .map_err(|error| AppError::BadRequest(error.to_string()))?;
 
-    view_page_by_path(&state, &path).await
+    view_page_by_path(&state, &path, &headers).await
 }
 
+/// Loads the page and computes its available actions.
 async fn view_page_by_path(
     state: &AppState,
     path: &str,
+    headers: &HeaderMap,
 ) -> AppResult {
     let page = sqlx::query_as::<_, PageRow>(
-        "SELECT title, html, toc_html FROM pages WHERE path = ?",
+        "SELECT title, html, toc_html, is_protected FROM pages WHERE path = ?",
     )
     .bind(path)
     .fetch_optional(&state.database)
@@ -79,16 +88,23 @@ async fn view_page_by_path(
         )));
     };
 
-    let context = page_view_context(
+    let mut context = page_view_context(
         path,
         &page.title,
         &page.html,
         &page.toc_html,
     );
+    let user = current_user(state, headers).await?;
+    insert_navigation_context(&mut context, user.as_ref());
+    let allowed = user.as_ref().is_some_and(|u| page.is_protected == 0 || can_edit_protected(u.role));
+    context.insert("page_actions_visible", &true);
+    context.insert("can_edit_page", &allowed);
+    context.insert("is_protected", &(page.is_protected != 0));
 
     render_template(&state.tera, "page_view.html", context)
 }
 
+/// Shows the creation editor to authenticated users.
 pub async fn show_create_form(
     State(state): State<std::sync::Arc<AppState>>,
     headers: HeaderMap,
@@ -96,16 +112,19 @@ pub async fn show_create_form(
     if current_user(&state, &headers).await?.is_none() {
         return Ok(Redirect::to("/~login").into_response());
     }
-    let context = page_editor_context(
+    let mut context = page_editor_context(
         "Crea nuova pagina",
         "create",
         "",
         "",
     );
+    let user = current_user(&state, &headers).await?;
+    insert_navigation_context(&mut context, user.as_ref());
 
     render_template(&state.tera, "page_editor.html", context)
 }
 
+/// Creates a page after checking authentication.
 pub async fn create_page(
     State(state): State<std::sync::Arc<AppState>>,
     headers: HeaderMap,
@@ -149,6 +168,7 @@ pub async fn create_page(
     }
 }
 
+/// Opens the editor after checking page permissions.
 pub async fn show_edit_form(
     State(state): State<std::sync::Arc<AppState>>,
     Path(raw_path): Path<String>,
@@ -181,16 +201,18 @@ pub async fn show_edit_form(
         return Ok((StatusCode::FORBIDDEN, "Non hai i permessi per modificare questa pagina.").into_response());
     }
 
-    let context = page_editor_context(
+    let mut context = page_editor_context(
         &format!("Modifica /{path}"),
         "edit",
         &path,
         &markdown_content,
     );
+    insert_navigation_context(&mut context, Some(&user));
 
     render_template(&state.tera, "page_editor.html", context)
 }
 
+/// Enforces permissions again when saving changes.
 pub async fn update_page(
     State(state): State<std::sync::Arc<AppState>>,
     Path(raw_path): Path<String>,
@@ -260,6 +282,7 @@ pub async fn update_page(
     .into_response())
 }
 
+/// Detects duplicate page paths reported by SQLite.
 fn is_unique_constraint_error(error: &sqlx::Error) -> bool {
     error
         .as_database_error()
@@ -271,6 +294,7 @@ fn is_unique_constraint_error(error: &sqlx::Error) -> bool {
         .unwrap_or(false)
 }
 
+/// Builds template data including breadcrumbs.
 fn page_view_context(
     path: &str,
     title: &str,
@@ -307,6 +331,7 @@ fn page_view_context(
     context
 }
 
+/// Builds the Markdown editor context.
 fn page_editor_context(
     heading: &str,
     mode: &str,
@@ -322,6 +347,7 @@ fn page_editor_context(
     context
 }
 
+/// Renders a Tera template as an HTTP response.
 fn render_template(
     tera: &tera::Tera,
     template_name: &str,
@@ -347,5 +373,14 @@ mod permission_tests {
         assert!(!can_edit_protected(UserRole::User));
         assert!(can_edit_protected(UserRole::Staff));
         assert!(can_edit_protected(UserRole::Admin));
+    }
+}
+
+/// Adds session-dependent navigation data to a Tera context.
+pub fn insert_navigation_context(context: &mut Context, user: Option<&crate::routes::auth::CurrentUser>) {
+    context.insert("authenticated", &user.is_some());
+    if let Some(user) = user {
+        context.insert("current_nickname", &user.nickname);
+        context.insert("personal_page_url", &format!("/{}", user.nickname));
     }
 }
