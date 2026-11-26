@@ -35,29 +35,35 @@
         </nav>
     </div>
 
-    <div class="page-title-area">
+</header>
+
+<div class="page-title-area">
+    <div class="page-heading-row">
+        <div class="page-actions-bar">
+            <details class="page-actions-menu">
+                <summary>Azioni</summary>
+                <nav class="page-actions" aria-label="Azioni sulla pagina">
+                    {% if is_protected %}
+                        <span class="protected-label">Pagina protetta</span>
+                    {% endif %}
+                    {% if can_edit_page %}
+                        <a href="{{ edit_url }}">Modifica</a>
+                    {% elif not authenticated %}
+                        <a href="/~login">Accedi per modificare</a>
+                    {% endif %}
+                    {% if authenticated %}<a href="/~nuova">Nuova pagina</a>{% endif %}
+                </nav>
+            </details>
+        </div>
         <h1 class="page-title">
             {% block page_title %}Titolo di prova{% endblock page_title %}
         </h1>
-
-        <nav class="breadcrumb" aria-label="Percorso di navigazione">
+    </div>
+    <nav class="breadcrumb" aria-label="Percorso di navigazione">
             {% block breadcrumb %}
                 <a href="/">Home</a>
             {% endblock breadcrumb %}
         </nav>
-    </div>
-</header>
-
-<div class="page-actions-bar">
-    <nav class="page-actions" aria-label="Azioni sulla pagina">
-        {% if can_edit_page %}
-            <a href="{{ edit_url }}">Modifica</a>
-        {% elif not authenticated %}
-            <a href="/~login">Accedi per modificare</a>
-        {% endif %}
-        {% if authenticated %}<a href="/~nuova">Nuova pagina</a>{% endif %}
-        {% if is_protected %}<span class="protected-label">Pagina protetta</span>{% endif %}
-    </nav>
 </div>
 
 <main class="site-main {% block main_class %}{% endblock main_class %}">

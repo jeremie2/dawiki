@@ -3,17 +3,23 @@
 /* ################################### */
 
 .site-header {
+    display: flex;
+    align-items: center;
     background-color: #1d1e29;
+    min-height: 80px;
+    margin-top: 15px;
     box-shadow: 0 1px 8px #000;
     border-radius: 10px;
 }
 
 .site-header-top {
+    width: 100%;
+    align-items: center;
     display: flex;
     align-items: center;
     gap: 20px;
     flex-wrap: wrap;
-    padding: 12px 20px;
+    padding: 8px 20px;
 }
 
 .site-brand {
@@ -43,12 +49,11 @@
 }
 
 .page-title-area {
-    /*padding: 10px 20px 14px;*/
-    padding-left: 20px;
+    padding: 14px 20px 10px;
 }
 
 .page-title {
-    margin: 0 0 8px;
+    margin: 0;
     color: #e1e1e1;
     font-size: 45px;
     font-weight: 700;
@@ -112,7 +117,7 @@
 }
 
 .page-actions-bar {
-    padding: 10px 20px;
+    padding: 0;
 }
 
 .page-actions {
@@ -131,6 +136,15 @@
 .page-actions a:focus-visible {
     color: var(--header-link-hover);
     text-decoration: underline;
+}
+
+.page-actions-menu .protected-label {
+    display: block;
+    max-width: none;
+    padding: 8px;
+    margin-bottom: 4px;
+    border-bottom: 1px solid #777;
+    font-size: 14px;
 }
 
 .technical-menu {
@@ -255,9 +269,6 @@
         min-width: 0;
     }
 
-    .page-actions-bar {
-        padding: 10px 20px;
-    }
 
     .page-actions {
         gap: 10px;
@@ -298,10 +309,6 @@
     line-height: normal;
 }
 
-/* Center the page heading while keeping the breadcrumb left-aligned. */
-.page-title-area .page-title {
-    text-align: center;
-}
 
 /* The form should not create a separate flex item with its own baseline. */
 .site-nav .nav-logout {
@@ -319,3 +326,77 @@
     padding: 0;
     appearance: none;
 }
+
+/* Keep the page heading independent of the main site navigation. */
+.page-heading-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 8px;
+}
+.page-heading-row .page-title {
+    flex: 1;
+    min-width: 0;
+    text-align: right;
+    overflow-wrap: anywhere;
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+}
+.page-actions-bar {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 4px;
+    flex: 0 0 auto;
+}
+.page-actions-menu { position: relative; }
+.page-actions-menu summary {
+    cursor: pointer;
+    color: var(--header-link);
+    font-size: 16px;
+    padding: 6px 10px;
+    border: 1px solid currentColor;
+    border-radius: 6px;
+}
+/* Overlay the actions rather than shifting the page when opened. */
+.page-actions-menu .page-actions {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    z-index: 30;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    width: max-content;
+    max-width: min(260px, 75vw);
+    padding: 6px;
+    background: #1d1e29;
+    border: 1px solid #777;
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0,0,0,.3);
+}
+.page-actions-menu .page-actions a { padding: 8px; font-size: 16px; }
+.page-title-area .breadcrumb { overflow-wrap: anywhere; }
+@media (prefers-color-scheme: light) {
+    .page-actions-menu .page-actions { background: #f0f0f0; }
+}
+@media (max-width: 750px) {
+    .site-nav { flex-wrap: wrap; flex-shrink: 1; max-width: 100%; }
+    .page-title-area { padding: 12px 4px 8px; }
+    .page-heading-row { gap: 10px; }
+    .protected-label { max-width: 95px; }
+}
+
+/* Final heading layout: independent of the site header and color scheme. */
+.site-header { background: #1d1e29; box-shadow: none; border-radius: 8px; }
+.site-header .site-header-top { padding: 12px 16px; gap: 12px 20px; }
+.site-header .site-brand { color: #e1e1e1; text-decoration: underline; text-decoration-color: #ff9c61; text-decoration-thickness: 2px; text-underline-offset: 4px; }
+.site-header .site-nav a, .site-header .site-nav .nav-text-link { color: #9ecbff; font-size: 16px; }
+.page-title-area { padding: 16px 0 12px; }
+.page-title-area .page-heading-row { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 16px; margin-bottom: 10px; }
+.page-title-area .page-heading-row .page-title { margin: 0; text-align: right; font-size: clamp(1.5rem, 3vw, 2rem); line-height: 1.2; overflow-wrap: anywhere; }
+.page-title-area .breadcrumb, .page-title-area .breadcrumb a { font-size: 18px; line-height: 1.5; }
+.page-actions-menu summary { color: inherit; border-color: #888; padding: 8px 12px; }
+.page-actions-menu:not([open]) > .page-actions { display: none; }
+.page-actions-menu .page-actions a { color: inherit; }
+@media (max-width: 750px) { .site-header .site-header-top { gap: 10px; } .page-title-area .page-heading-row { gap: 10px; } }
