@@ -32,21 +32,30 @@
 
 }
 
-/* TOC palette is identical in both color schemes. */
+/* Shared dark palette for informational panels in both color schemes. */
+.toc-container,
+.toc-sidebar,
+#sidebar-toc,
+.alert-active,
+.link-forum-box {
+    background-color: #1d1e29;
+    color: #e1e1e1;
+    font-size: 16px;
+}
+
 .toc-container,
 .toc-sidebar,
 #sidebar-toc {
-    background-color: #1d1e29;
-    color: #e1e1e1;
     border-radius: 10px;
-    font-size: 16px;
 }
 
 .toc-container a,
 .toc-sidebar a,
 #sidebar-toc a,
 .wiki-content .toc-container a,
-#preview .toc-container a {
+#preview .toc-container a,
+.wiki-content .link-forum-box a,
+#preview .link-forum-box a {
     color: #fff;
     text-decoration-color: #ff9c61;
     text-decoration-thickness: 1px;
@@ -151,7 +160,6 @@
 .ubuntu-alert {
     color: #e1e1e1;
     padding: 12px 16px;
-    border-radius: 4px;
     font-size: 0.95em;
     line-height: 1.5;
 }
@@ -160,11 +168,16 @@
 .link-forum-box {
     max-width: 400px;
     padding: 4px;
-    background-color: #1d1e29;
-    font-size: 16px;
     text-align: center;
 }
 
+.ubuntu-alert {
+    border-radius: 0px 0px 4px 4px;
+}
+
+.link-forum-box {
+    border-radius: 4px 4px 0px 0px;
+}
 .alert-pro {
     background-color: #954718;
 }
@@ -220,12 +233,6 @@
 /* ################################### */
 
 @media screen and (prefers-color-scheme: light) {
-    .alert-active,
-    .link-forum-box {
-        background-color: #fcfcfc;
-        color: #333;
-    }
-
     .alert-pro {
         color: #fff;
         background-color: #e97631;

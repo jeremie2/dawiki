@@ -39,6 +39,9 @@
 
 <div class="page-title-area">
     <div class="page-heading-row">
+        <h1 class="page-title">
+            {% block page_title %}Titolo di prova{% endblock page_title %}
+        </h1>
         <div class="page-actions-bar">
             <details class="page-actions-menu">
                 <summary>Azioni</summary>
@@ -55,9 +58,6 @@
                 </nav>
             </details>
         </div>
-        <h1 class="page-title">
-            {% block page_title %}Titolo di prova{% endblock page_title %}
-        </h1>
     </div>
     <nav class="breadcrumb" aria-label="Percorso di navigazione">
             {% block breadcrumb %}

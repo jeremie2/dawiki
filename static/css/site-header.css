@@ -62,7 +62,7 @@
     margin: 0;
     color: #e1e1e1;
     font-size: clamp(1.5rem, 3vw, 2rem);
-    text-align: right;
+    text-align: left;
     overflow-wrap: anywhere;
     font-weight: 700;
     line-height: 1.2;
@@ -129,7 +129,7 @@
 /* Page heading and dropdown actions */
 .page-heading-row {
     display: grid;
-    grid-template-columns: auto minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1fr) auto;
     align-items: center;
     gap: 16px;
     margin-bottom: 10px;
@@ -137,9 +137,12 @@
 
 .page-actions-menu {
     position: relative;
+    color: #e1e1e1;
 }
 
 .page-actions-menu summary {
+    background-color: #1d1e29;
+    color: #e1e1e1;
     cursor: pointer;
     font-size: 16px;
     padding: 8px 12px;
@@ -150,7 +153,7 @@
 .page-actions-menu .page-actions {
     position: absolute;
     top: calc(100% + 4px);
-    left: 0;
+    right: 0;
     z-index: 30;
     display: flex;
     flex-direction: column;
@@ -158,6 +161,7 @@
     max-width: min(260px, 75vw);
     padding: 6px;
     background: #1d1e29;
+    color: #e1e1e1;
     border: 1px solid #777;
     border-radius: 6px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, .3);
@@ -168,7 +172,7 @@
 }
 
 .page-actions a {
-    color: inherit;
+    color: #9ecbff;
     padding: 8px;
     font-size: 16px;
     text-decoration: none;
@@ -282,10 +286,6 @@
     .breadcrumb a:hover,
     .breadcrumb a:focus-visible {
         color: #084298;
-    }
-
-    .page-actions-menu .page-actions {
-        background: #f0f0f0;
     }
 
 }
