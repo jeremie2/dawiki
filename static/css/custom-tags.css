@@ -25,28 +25,56 @@
 }
 
 .toc-container {
-    width: max-content;
-    min-width: 400px;
-    max-width: 400px;
+    width: 400px;
+    max-width: 100%;
     padding: 20px;
     margin-bottom: 12px;
+
+}
+
+/* TOC palette is identical in both color schemes. */
+.toc-container,
+.toc-sidebar,
+#sidebar-toc {
     background-color: #1d1e29;
+    color: #e1e1e1;
     border-radius: 10px;
     font-size: 16px;
 }
 
-.toc-container a {
-    font-size: 16px;
+.toc-container a,
+.toc-sidebar a,
+#sidebar-toc a,
+.wiki-content .toc-container a,
+#preview .toc-container a {
+    color: #fff;
+    text-decoration-color: #ff9c61;
     text-decoration-thickness: 1px;
+    font-size: 16px;
+}
+
+.toc-container ol,
+.toc-sidebar ol,
+#sidebar-toc ol,
+.wiki-content .toc-container ol,
+#preview .toc-container ol {
+    margin: 0;
+    padding-left: 1.25rem;
+}
+
+.toc-container li,
+.toc-sidebar li,
+#sidebar-toc li,
+.wiki-content .toc-container li,
+#preview .toc-container li {
+    font-size: 16px;
+    margin-bottom: 5px;
 }
 
 .toc-container strong {
     font-size: 25px;
 }
 
-.toc-container li {
-    margin-bottom: 5px;
-}
 
 /* ################################### */
 /* ########## SIDEBAR TOC ############ */
@@ -58,9 +86,7 @@
     min-width: 0;
     padding: 20px 24px 20px 28px;
     margin-bottom: 12px;
-    background-color: #1d1e29;
-    border-radius: 10px;
-    font-size: 16px;
+
 }
 
 .toc-sidebar {
@@ -83,28 +109,6 @@
     background-color: transparent;
     box-shadow: none;
     border-radius: 0;
-}
-
-.toc-sidebar ol,
-#sidebar-toc ol {
-    margin: 0;
-    padding-left: 1.25rem;
-}
-
-.toc-sidebar ol ol,
-#sidebar-toc ol ol {
-    padding-left: 1.25rem;
-}
-
-.toc-sidebar li,
-#sidebar-toc li {
-    margin-bottom: 5px;
-}
-
-.toc-sidebar a,
-#sidebar-toc a {
-    font-size: 16px;
-    text-decoration-thickness: 1px;
 }
 
 .mobile-only-toc {

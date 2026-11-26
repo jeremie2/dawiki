@@ -200,12 +200,4 @@
         color: #333;
     }
 
-    #sidebar-toc {
-        background-color: #fcfcfc;
-        box-shadow: 0 1px 8px #cdcdcd;
-    }
-
-    .toc-container {
-        box-shadow: 0 1px 8px #cdcdcd;
-    }
 }

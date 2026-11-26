@@ -8,17 +8,16 @@
     background-color: #1d1e29;
     min-height: 80px;
     margin-top: 15px;
-    border-radius: 10px;
+    border-radius: 8px;
 }
 
 .site-header-top {
     width: 100%;
-    align-items: center;
     display: flex;
     align-items: center;
-    gap: 20px;
+    gap: 12px 20px;
     flex-wrap: wrap;
-    padding: 8px 20px;
+    padding: 12px 16px;
 }
 
 .site-brand {
@@ -26,6 +25,10 @@
     font-weight: bold;
     font-size: 20px;
     flex-shrink: 0;
+    text-decoration: underline;
+    text-decoration-color: #ff9c61;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 4px;
 }
 
 .site-nav {
@@ -37,36 +40,44 @@
     margin-left: auto;
 }
 
-.site-nav a {
+.site-nav a,
+.site-nav .nav-text-link {
+    color: #9ecbff;
     text-decoration: none;
     font-size: 16px;
 }
 
 .site-nav a:hover,
-.site-nav a:focus-visible {
+.site-nav a:focus-visible,
+.site-nav .nav-text-link:hover,
+.site-nav .nav-text-link:focus-visible {
     text-decoration: underline;
 }
 
 .page-title-area {
-    padding: 14px 20px 10px;
+    padding: 16px 0 12px;
 }
 
 .page-title {
     margin: 0;
     color: #e1e1e1;
-    font-size: 45px;
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    text-align: right;
+    overflow-wrap: anywhere;
     font-weight: 700;
     line-height: 1.2;
 }
 
 .breadcrumb {
     color: #b8b8b8;
-    font-size: 0.95rem;
+    font-size: 18px;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
 }
 
 .breadcrumb a {
     color: #9ecbff;
-    font-size: 16px;
+    font-size: 18px;
     text-decoration: none;
 }
 
@@ -101,13 +112,13 @@
 }
 
 .advanced-search-link {
-    color: var(--header-link);
+    color: #9ecbff;
     text-decoration: none;
 }
 
 .advanced-search-link:hover,
 .advanced-search-link:focus-visible {
-    color: var(--header-link-hover);
+    color: #c7e2ff;
     text-decoration: underline;
 }
 
@@ -115,35 +126,85 @@
     padding: 8px 20px;
 }
 
-.page-actions-bar {
-    padding: 0;
+/* Page heading and dropdown actions */
+.page-heading-row {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 10px;
 }
 
-.page-actions {
+.page-actions-menu {
+    position: relative;
+}
+
+.page-actions-menu summary {
+    cursor: pointer;
+    font-size: 16px;
+    padding: 8px 12px;
+    border: 1px solid #888;
+    border-radius: 6px;
+}
+
+.page-actions-menu .page-actions {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    z-index: 30;
     display: flex;
-    align-items: center;
-    gap: 14px;
-    flex-wrap: wrap;
+    flex-direction: column;
+    width: max-content;
+    max-width: min(260px, 75vw);
+    padding: 6px;
+    background: #1d1e29;
+    border: 1px solid #777;
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, .3);
+}
+
+.page-actions-menu:not([open]) > .page-actions {
+    display: none;
 }
 
 .page-actions a {
-    color: var(--header-link);
+    color: inherit;
+    padding: 8px;
+    font-size: 16px;
     text-decoration: none;
 }
 
 .page-actions a:hover,
 .page-actions a:focus-visible {
-    color: var(--header-link-hover);
     text-decoration: underline;
 }
 
 .page-actions-menu .protected-label {
     display: block;
-    max-width: none;
     padding: 8px;
     margin-bottom: 4px;
     border-bottom: 1px solid #777;
     font-size: 14px;
+    opacity: .75;
+}
+
+/* Keep logout a POST form without introducing an extra flex box. */
+.site-nav .nav-logout {
+    display: contents;
+}
+
+.site-nav .nav-text-link {
+    display: inline;
+    font: inherit;
+    font-size: 16px;
+    line-height: inherit;
+    vertical-align: baseline;
+    margin: 0;
+    padding: 0;
+    appearance: none;
+    background: transparent;
+    border: 0;
+    cursor: pointer;
 }
 
 .technical-menu {
@@ -151,7 +212,7 @@
 }
 
 .technical-menu summary {
-    color: var(--header-link);
+    color: #9ecbff;
     cursor: pointer;
     list-style: none;
 }
@@ -166,7 +227,7 @@
 
 .technical-menu summary:hover,
 .technical-menu summary:focus-visible {
-    color: var(--header-link-hover);
+    color: #c7e2ff;
 }
 
 .technical-menu-panel {
@@ -186,14 +247,14 @@
     display: block;
     padding: 6px 8px;
     border-radius: 4px;
-    color: var(--header-link);
+    color: #9ecbff;
     text-decoration: none;
 }
 
 .technical-menu-panel a:hover,
 .technical-menu-panel a:focus-visible {
-    background: var(--header-menu-hover-bg);
-    color: var(--header-link-hover);
+    background: #35353d;
+    color: #c7e2ff;
 }
 
 /* ################################### */
@@ -201,22 +262,9 @@
 /* ################################### */
 
 @media screen and (prefers-color-scheme: light) {
-    .site-header {
-        background-color: #f0f0f0;
-        box-shadow: 0 1px 8px #9cb2d4;
-    }
-
-    .page-title {
-        color: #222222;
-    }
-
     .site-search input {
         background: #fff;
         color: black;
-    }
-
-    .page-actions {
-        font-size: 16px;
     }
 
     .page-title {
@@ -236,26 +284,28 @@
         color: #084298;
     }
 
-    .technical-menu-panel {
-        background-color: #c8d1df;
-        color: #333;
+    .page-actions-menu .page-actions {
+        background: #f0f0f0;
     }
+
 }
 
 /* ################################### */
 /* ########### RESPONSIVE ############ */
 /* ################################### */
 
-/*@media (max-width: 1023px) {*/
 @media (max-width: 750px) {
     .site-header-top {
         align-items: flex-start;
         flex-direction: column;
-        gap: 12px;
+        gap: 10px;
     }
 
     .site-nav {
         margin-left: 0;
+        flex-wrap: wrap;
+        flex-shrink: 1;
+        max-width: 100%;
     }
 
     .site-search {
@@ -269,133 +319,8 @@
     }
 
 
-    .page-actions {
+    .page-heading-row {
         gap: 10px;
     }
 }
 
-/* Real navigation controls, including the POST logout action. */
-.nav-logout { margin: 0; }
-.nav-logout .nav-text-link {
-    font: inherit;
-    color: var(--header-link);
-    background: transparent;
-    border: 0;
-    padding: 0;
-    cursor: pointer;
-}
-.nav-logout .nav-text-link:hover, .nav-logout .nav-text-link:focus-visible {
-    color: var(--header-link-hover);
-    text-decoration: underline;
-}
-.protected-label { font-size: 0.9rem; opacity: 0.75; }
-@media (max-width: 700px) {
-    .site-nav { flex-wrap: wrap; margin-left: 0; }
-}
-
-/* A POST button styled like the other navigation links. */
-.site-nav .nav-text-link { font-size: 16px; text-decoration: none; }
-
-/* Keep the POST logout control aligned with the surrounding nav links. */
-.site-nav .nav-logout {
-    display: flex;
-    align-items: center;
-    align-self: center;
-}
-.site-nav .nav-logout .nav-text-link {
-    display: inline-flex;
-    align-items: center;
-    line-height: normal;
-}
-
-
-/* The form should not create a separate flex item with its own baseline. */
-.site-nav .nav-logout {
-    display: contents;
-}
-
-/* Match the line box of the adjacent navigation anchors. */
-.site-nav .nav-logout .nav-text-link {
-    display: inline;
-    font: inherit;
-    font-size: 16px;
-    line-height: inherit;
-    vertical-align: baseline;
-    margin: 0;
-    padding: 0;
-    appearance: none;
-}
-
-/* Keep the page heading independent of the main site navigation. */
-.page-heading-row {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    margin-bottom: 8px;
-}
-.page-heading-row .page-title {
-    flex: 1;
-    min-width: 0;
-    text-align: right;
-    overflow-wrap: anywhere;
-    font-size: clamp(1.5rem, 4vw, 2.5rem);
-}
-.page-actions-bar {
-    display: flex;
-    align-items: flex-start;
-    flex-direction: column;
-    gap: 4px;
-    flex: 0 0 auto;
-}
-.page-actions-menu { position: relative; }
-.page-actions-menu summary {
-    cursor: pointer;
-    color: var(--header-link);
-    font-size: 16px;
-    padding: 6px 10px;
-    border: 1px solid currentColor;
-    border-radius: 6px;
-}
-/* Overlay the actions rather than shifting the page when opened. */
-.page-actions-menu .page-actions {
-    position: absolute;
-    top: calc(100% + 4px);
-    left: 0;
-    z-index: 30;
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 0;
-    width: max-content;
-    max-width: min(260px, 75vw);
-    padding: 6px;
-    background: #1d1e29;
-    border: 1px solid #777;
-    border-radius: 6px;
-    box-shadow: 0 4px 12px rgba(0,0,0,.3);
-}
-.page-actions-menu .page-actions a { padding: 8px; font-size: 16px; }
-.page-title-area .breadcrumb { overflow-wrap: anywhere; }
-@media (prefers-color-scheme: light) {
-    .page-actions-menu .page-actions { background: #f0f0f0; }
-}
-@media (max-width: 750px) {
-    .site-nav { flex-wrap: wrap; flex-shrink: 1; max-width: 100%; }
-    .page-title-area { padding: 12px 4px 8px; }
-    .page-heading-row { gap: 10px; }
-    .protected-label { max-width: 95px; }
-}
-
-/* Final heading layout: independent of the site header and color scheme. */
-.site-header { background: #1d1e29; box-shadow: none; border-radius: 8px; }
-.site-header .site-header-top { padding: 12px 16px; gap: 12px 20px; }
-.site-header .site-brand { color: #e1e1e1; text-decoration: underline; text-decoration-color: #ff9c61; text-decoration-thickness: 2px; text-underline-offset: 4px; }
-.site-header .site-nav a, .site-header .site-nav .nav-text-link { color: #9ecbff; font-size: 16px; }
-.page-title-area { padding: 16px 0 12px; }
-.page-title-area .page-heading-row { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 16px; margin-bottom: 10px; }
-.page-title-area .page-heading-row .page-title { margin: 0; text-align: right; font-size: clamp(1.5rem, 3vw, 2rem); line-height: 1.2; overflow-wrap: anywhere; }
-.page-title-area .breadcrumb, .page-title-area .breadcrumb a { font-size: 18px; line-height: 1.5; }
-.page-actions-menu summary { color: inherit; border-color: #888; padding: 8px 12px; }
-.page-actions-menu:not([open]) > .page-actions { display: none; }
-.page-actions-menu .page-actions a { color: inherit; }
-@media (max-width: 750px) { .site-header .site-header-top { gap: 10px; } .page-title-area .page-heading-row { gap: 10px; } }

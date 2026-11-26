@@ -283,23 +283,6 @@ button {
     margin-bottom: 10px;
 }
 
-/* Preserve indentation for nested TOC levels */
-.toc-container ol,
-#sidebar-toc ol {
-    margin: 0;
-    padding-left: 1.25rem;
-}
-
-.toc-container ol ol,
-#sidebar-toc ol ol {
-    padding-left: 1.25rem;
-}
-
-.toc-container li,
-#sidebar-toc li {
-    margin-bottom: 5px;
-}
-
 /* Prism code blocks: rounded container and clean inner code */
 .wiki-content pre[class*="language-"],
 #preview pre[class*="language-"] {
@@ -411,7 +394,7 @@ button {
     .wiki-content a,
     #preview a {
         color: #000000;
-        text-decoration-color: ##ec8314;
+        text-decoration-color: #ec8314;
     }
 
     .wiki-content code,
