@@ -376,13 +376,6 @@ button {
         color: #333;
     }
 
-    a:link,
-    a:visited,
-    a:hover,
-    a:active {
-        color: #5a5a5a;
-    }
-
     table {
         background-color: #fcfcfc;
         border: 2px solid #fcfcfc;

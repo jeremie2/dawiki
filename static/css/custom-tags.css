@@ -32,7 +32,6 @@
     margin-bottom: 12px;
     background-color: #1d1e29;
     border-radius: 10px;
-    box-shadow: 0 1px 8px #000;
     font-size: 16px;
 }
 
@@ -61,7 +60,6 @@
     margin-bottom: 12px;
     background-color: #1d1e29;
     border-radius: 10px;
-    box-shadow: 0 1px 8px #000;
     font-size: 16px;
 }
 
@@ -218,21 +216,6 @@
 /* ################################### */
 
 @media screen and (prefers-color-scheme: light) {
-    .toc-container,
-    .toc-sidebar,
-    #sidebar-toc {
-        background-color: #fcfcfc;
-        box-shadow: 0 1px 8px #cdcdcd;
-    }
-
-    .toc-sidebar a {
-        color: #2e2e2e;
-    }
-    
-    .toc-container a {
-        color: #2e2e2e;
-    }
-
     .alert-active,
     .link-forum-box {
         background-color: #fcfcfc;
