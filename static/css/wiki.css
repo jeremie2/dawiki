@@ -1,3 +1,11 @@
+/* Shared palette for fixed dark interface panels. */
+:root {
+    --panel-background: #1d1e29;
+    --panel-text: #e1e1e1;
+    --panel-link: #9ecbff;
+    --panel-accent: #ff9c61;
+}
+
 /* ################################### */
 /* ######### RESET + GENERAL ######### */
 /* ################################### */
@@ -11,8 +19,7 @@
 }
 
 body {
-    margin: 20px;
-    margin-top: 0px;
+    margin: 0 20px 20px;
     font-family: sans-serif;
     font-size: 18px;
     background-color: #151515;
@@ -52,12 +59,6 @@ button {
 /* ########### WIKI CONTENT ########## */
 /* ################################### */
 
-.wiki-content {
-    flex: 1;
-    min-width: 0;
-    max-width: 100%;
-}
-
 .wiki-content h1,
 .wiki-content h2,
 .wiki-content h3 {
@@ -69,18 +70,7 @@ button {
     line-height: 1.5;
 }
 
-.wiki-content a {
-    color: #fff;
-    text-decoration: underline;
-    text-decoration-color: #ff9c61;
-    text-decoration-thickness: 2px;
-}
-
 .wiki-content pre,
-.wiki-content code {
-    background-color: #1d1e29;
-}
-
 .wiki-content pre {
     overflow: scroll;
     margin: 0.5em 0;
@@ -106,53 +96,11 @@ button {
     padding: 0;
 }
 
-.wiki-content td code {
-    border: none;
-    background-color: #363541;
-}
-
-.wiki-content ul,
-.wiki-content ol {
-    margin-top: 10px;
-    margin-bottom: 15px;
-    padding-left: 2rem;
-}
-
-.wiki-content li {
-    margin-bottom: 10px;
-}
-
-.wiki-content table {
-    background-color: #1d1e29;
-    border: 2px solid #1d1e29;
-    box-shadow: 0 1px 4px #000;
-    margin-top: 15px;
-    margin-bottom: 15px;
-    border-collapse: collapse;
-}
-
-.wiki-content td,
-.wiki-content th {
-    border: 1pt solid #6c6c6c;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    padding-left: 8px;
-    padding-right: 8px;
-}
-
-.wiki-content blockquote {
-    background-color: #4a5561;
-    border-radius: 10px;
-}
-
 .wiki-content blockquote p {
     color: #d6d6d6;
     margin-top: 15px;
     margin-bottom: 15px;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    padding-left: 20px;
-    padding-right: 20px;
+    padding: 10px 20px;
 }
 
 /* ################################### */
@@ -161,14 +109,16 @@ button {
 
 /* Page content container */
 .wiki-content {
+    flex: 1;
+    min-width: 0;
+    max-width: 100%;
     background-color: #303038;
     border: 2px solid #d05d19;
     border-radius: 10px;
     padding: 20px 20px 10px;
-    box-sizing: border-box;
 }
 
-/* Links, including TOC links */
+/* Content and preview links */
 .wiki-content a,
 #preview a {
     color: #ffffff;
@@ -353,12 +303,6 @@ button {
         background-color: #f1e8e3;
     }
 
-    #preview,
-    #markdown-input {
-        background-color: #f0f0f0;
-        color: #333;
-    }
-
     table {
         background-color: #fcfcfc;
         border: 2px solid #fcfcfc;
@@ -427,12 +371,8 @@ button {
     .wiki-content td,
     #preview th,
     #preview td {
+        background-color: #fcfcfc;
         border-color: #d4d4d4;
-    }
-
-    .wiki-content th,
-    #preview th {
-        background-color: #f1f1f1;
     }
 
     .wiki-content td code,
@@ -468,19 +408,6 @@ button {
         background-color: transparent;
         border: none;
         color: inherit;
-    }
-
-    .wiki-content th,
-    .wiki-content td,
-    #preview th,
-    #preview td {
-        background-color: #fcfcfc;
-        border-color: #d4d4d4;
-    }
-
-    .wiki-content th,
-    #preview th {
-        font-weight: bold;
     }
 
     .error-card {

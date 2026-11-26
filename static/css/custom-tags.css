@@ -29,7 +29,6 @@
     max-width: 100%;
     padding: 20px;
     margin-bottom: 12px;
-
 }
 
 /* Shared dark palette for informational panels in both color schemes. */
@@ -38,8 +37,8 @@
 #sidebar-toc,
 .alert-active,
 .link-forum-box {
-    background-color: #1d1e29;
-    color: #e1e1e1;
+    background-color: var(--panel-background);
+    color: var(--panel-text);
     font-size: 16px;
 }
 
@@ -57,7 +56,7 @@
 .wiki-content .link-forum-box a,
 #preview .link-forum-box a {
     color: #fff;
-    text-decoration-color: #ff9c61;
+    text-decoration-color: var(--panel-accent);
     text-decoration-thickness: 1px;
     font-size: 16px;
 }
@@ -95,7 +94,6 @@
     min-width: 0;
     padding: 20px 24px 20px 28px;
     margin-bottom: 12px;
-
 }
 
 .toc-sidebar {
@@ -158,7 +156,7 @@
 /* ################################### */
 
 .ubuntu-alert {
-    color: #e1e1e1;
+    color: var(--panel-text);
     padding: 12px 16px;
     font-size: 0.95em;
     line-height: 1.5;
@@ -172,20 +170,17 @@
 }
 
 .ubuntu-alert {
-    border-radius: 0px 0px 4px 4px;
+    border-radius: 0 0 4px 4px;
 }
 
 .link-forum-box {
-    border-radius: 4px 4px 0px 0px;
+    border-radius: 4px 4px 0 0;
 }
 .alert-pro {
     background-color: #954718;
 }
 
-.alert-obsolete {
-    background-color: #561a1a;
-}
-
+.alert-obsolete,
 .alert-error {
     background-color: #561a1a;
 }
@@ -205,7 +200,7 @@
         margin-left: auto;
     }
 
-    /* Nella vista divisa l'indice rimane dentro l'anteprima */
+    /* Keep the TOC inside the preview in split view. */
     .editor-container.split-view #preview .desktop-only-toc,
     .editor-container.split-view #preview .toc-sidebar {
         display: none !important;
@@ -215,13 +210,13 @@
         display: block !important;
     }
 
-    /* Nella vista divisa i riquadri restano a sinistra */
+    /* Keep panels left-aligned in split view. */
     .editor-container.split-view #preview .ubuntu-alert,
     .editor-container.split-view #preview .link-forum-box {
         margin-left: 0 !important;
     }
 
-    /* Nella vista solo anteprima i riquadri vanno a destra */
+    /* Right-align panels in preview-only mode. */
     .editor-container.only-preview #preview .ubuntu-alert,
     .editor-container.only-preview #preview .link-forum-box {
         margin-left: auto;
@@ -239,18 +234,10 @@
         box-shadow: 0 1px 8px #cdcdcd;
     }
 
-    .alert-obsolete {
-        background-color: #9b0909;
-        box-shadow: 0 1px 8px #cdcdcd;
-    }
+    .alert-obsolete,
 
     .alert-obsolete a,
     .alert-pro a {
         color: #fff;
-    }
-
-    .alert-error {
-        background-color: #9b0909;
-        box-shadow: 0 1px 8px #cdcdcd;
     }
 }

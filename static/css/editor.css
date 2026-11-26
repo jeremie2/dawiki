@@ -116,10 +116,6 @@
     margin-bottom: 16px;
 }
 
-.view-toggle-bar button {
-    margin-bottom: 0;
-}
-
 .push {
     display: flex;
     flex-wrap: wrap;
@@ -137,12 +133,13 @@
     margin-bottom: 16px;
 }
 
-.editor-actions button {
+.view-toggle-bar button,
+.editor-actions button,
+.push button {
     margin-bottom: 0;
 }
 
 .push button {
-    margin-bottom: 0;
     min-width: 45px;
 }
 
@@ -199,5 +196,4 @@
         background-color: #f0f0f0;
         color: #333;
     }
-
 }

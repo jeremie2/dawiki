@@ -5,7 +5,7 @@
 .site-header {
     display: flex;
     align-items: center;
-    background-color: #1d1e29;
+    background-color: var(--panel-background);
     min-height: 80px;
     margin-top: 15px;
     border-radius: 8px;
@@ -21,12 +21,12 @@
 }
 
 .site-brand {
-    color: #e1e1e1;
+    color: var(--panel-text);
     font-weight: bold;
     font-size: 20px;
     flex-shrink: 0;
     text-decoration: underline;
-    text-decoration-color: #ff9c61;
+    text-decoration-color: var(--panel-accent);
     text-decoration-thickness: 2px;
     text-underline-offset: 4px;
 }
@@ -42,7 +42,7 @@
 
 .site-nav a,
 .site-nav .nav-text-link {
-    color: #9ecbff;
+    color: var(--panel-link);
     text-decoration: none;
     font-size: 16px;
 }
@@ -60,7 +60,7 @@
 
 .page-title {
     margin: 0;
-    color: #e1e1e1;
+    color: var(--panel-text);
     font-size: clamp(1.5rem, 3vw, 2rem);
     text-align: left;
     overflow-wrap: anywhere;
@@ -76,7 +76,7 @@
 }
 
 .breadcrumb a {
-    color: #9ecbff;
+    color: var(--panel-link);
     font-size: 18px;
     text-decoration: none;
 }
@@ -112,7 +112,7 @@
 }
 
 .advanced-search-link {
-    color: #9ecbff;
+    color: var(--panel-link);
     text-decoration: none;
 }
 
@@ -137,12 +137,12 @@
 
 .page-actions-menu {
     position: relative;
-    color: #e1e1e1;
+    color: var(--panel-text);
 }
 
 .page-actions-menu summary {
-    background-color: #1d1e29;
-    color: #e1e1e1;
+    background-color: var(--panel-background);
+    color: var(--panel-text);
     cursor: pointer;
     font-size: 16px;
     padding: 8px 12px;
@@ -160,8 +160,8 @@
     width: max-content;
     max-width: min(260px, 75vw);
     padding: 6px;
-    background: #1d1e29;
-    color: #e1e1e1;
+    background: var(--panel-background);
+    color: var(--panel-text);
     border: 1px solid #777;
     border-radius: 6px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, .3);
@@ -172,7 +172,7 @@
 }
 
 .page-actions a {
-    color: #9ecbff;
+    color: var(--panel-link);
     padding: 8px;
     font-size: 16px;
     text-decoration: none;
@@ -216,7 +216,7 @@
 }
 
 .technical-menu summary {
-    color: #9ecbff;
+    color: var(--panel-link);
     cursor: pointer;
     list-style: none;
 }
@@ -251,7 +251,7 @@
     display: block;
     padding: 6px 8px;
     border-radius: 4px;
-    color: #9ecbff;
+    color: var(--panel-link);
     text-decoration: none;
 }
 
@@ -287,7 +287,6 @@
     .breadcrumb a:focus-visible {
         color: #084298;
     }
-
 }
 
 /* ################################### */
@@ -323,4 +322,3 @@
         gap: 10px;
     }
 }
-
