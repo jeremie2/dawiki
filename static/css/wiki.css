@@ -341,6 +341,12 @@ button {
         text-decoration-color: #ec8314;
     }
 
+    .wiki-content .ubuntu-alert a,
+    #preview .ubuntu-alert a {
+    color: #fff;
+    font-weight: bold;
+}
+
     .wiki-content code,
     #preview code {
         background-color: #fcfcfc;
