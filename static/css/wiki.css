@@ -281,6 +281,10 @@ button {
         background-color: #c8d1df;
         color: #333;
     }
+    
+    :root {
+    --panel-background: #353647;
+}
 
     pre {
         background-color: #fcfcfc;
